@@ -1,0 +1,28 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/"
+)
+options(digits = 4, width = 160)
+```
+
+# covidestim
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: end -->
+
+### Installation
+
+Install from GitHub with:
+
+```{r, eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("epicentre-msf/covidestim")
+```
