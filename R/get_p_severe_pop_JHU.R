@@ -1,6 +1,7 @@
 #' Estimate proportion of severe cases adjusted for population structure
 #'
 #' @param age_distr age distribution data-frame
+#' @param outcome Outcome severity ("severe", "moderate", or "mild")
 #'
 #' @examples
 #' # population age-distribution for France
@@ -12,12 +13,12 @@
 #' @importFrom stats quantile coef
 #' @importFrom fitdistrplus fitdist
 #' @export get_p_severe_pop_JHU
-get_p_severe_pop_JHU <- function(age_distr) {
+get_p_severe_pop_JHU <- function(age_distr, outcome = "severe") {
 
   # age_distr <- get_age_pop("FRA", format = "long")
 
   # Load prob(severe | age) from Shenzhen
-  prob <- fetch_data("shenzhen_prob_severe")
+  prob <- fetch_data(paste0("shenzhen_prob_", outcome))
 
   # sum all proportion of age old than 70
   nage_ <- age_distr$population * 1000

@@ -19,20 +19,23 @@
 #' @export get_severity_neher
 get_severity_neher <- function() {
 
-  severity_neher <- tibble::tribble(
+  severity_neher <- tribble(
     ~age, ~confirmed, ~severe, ~critical, ~fatal,
-    "0-9",5,1,5,30,
-    "10-19",5,3,10,30,
-    "20-29",10,3,10,30,
-    "30-39",15,3,15,30,
-    "40-49",20,6,20,30,
-    "50-59",25,10,25,40,
-    "60-69",30,25,35,40,
-    "70-79",40,35,45,50,
-    "80+",50,50,55,50
+    "0-9",    5,  1,  5, 30,
+    "10-19",  5,  3, 10, 30,
+    "20-29", 10,  3, 10, 30,
+    "30-39", 15,  3, 15, 30,
+    "40-49", 20,  6, 20, 30,
+    "50-59", 25, 10, 25, 40,
+    "60-69", 30, 25, 35, 40,
+    "70-79", 40, 35, 45, 50,
+    "80+",   50, 50, 55, 50
   ) %>%
-    mutate_at(vars(-age), function(x) x / 100) %>%
-    mutate(severe_of_tot = confirmed * severe)
+    mutate_at(vars(-age), function(x) x/100) %>%
+    mutate(p_hosp_inf = confirmed * severe,
+           p_icu_hosp = critical,
+           p_dead_hosp = critical * fatal,
+           p_dead_inf = p_dead_hosp * p_hosp_inf)
 
   return(severity_neher)
 }
