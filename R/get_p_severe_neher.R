@@ -5,7 +5,7 @@
 #'
 #' @param iso iso_a3 of country of interest (defaults to China, "CHN")
 #'
-#' @example
+#' @examples
 #' get_p_severe_neher(iso = "USA")
 #'
 #' @export get_p_severe_neher

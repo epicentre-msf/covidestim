@@ -21,18 +21,31 @@ outcome <- c("mild", "moderate", "severe")
 file <- paste0("data-raw/", outcome, "_age_prob.csv")
 
 # each col contains samples for an age category
-prob_mild <- readr::read_csv(file[1])
-prob_moderate <- readr::read_csv(file[2])
-prob_severe <- readr::read_csv(file[3])
+shenzhen_prob_mild <- readr::read_csv(file[1])
+shenzhen_prob_moderate <- readr::read_csv(file[2])
+shenzhen_prob_severe <- readr::read_csv(file[3])
 
 age_cat <- c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70+")
-names(prob_mild) <- names(prob_moderate) <- names(prob_severe) <- age_cat
+names(shenzhen_prob_mild) <- names(shenzhen_prob_moderate) <- names(shenzhen_prob_severe) <- age_cat
+
+
+## Davies
+davies <- readr::read_csv("data-raw/tabS1_Davies2020.csv")
+
+## Salje
+salje <- readr::read_csv("data-raw/tabS1S2_Salje_2020.csv")
+
+## Vanzandervoort
+vanzand <- readr::read_csv("data-raw/tabS2_VanZandvoort2020.csv")
 
 
 ## write
 usethis::use_data(wpp_loc,
                   wpp_pop,
-                  prob_mild,
-                  prob_moderate,
-                  prob_severe,
+                  shenzhen_prob_mild,
+                  shenzhen_prob_moderate,
+                  shenzhen_prob_severe,
+                  davies,
+                  salje,
+                  vanzand,
                   overwrite = TRUE)

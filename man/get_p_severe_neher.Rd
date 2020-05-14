@@ -14,6 +14,10 @@ get_p_severe_neher(iso = "CHN")
 Get the age-adjusted proportion severe by country (giving ISO A3 code)
 according to the assumptions taken by the Neher lab model
 }
+\examples{
+get_p_severe_neher(iso = "USA")
+
+}
 \author{
 Flavio Finger
 }

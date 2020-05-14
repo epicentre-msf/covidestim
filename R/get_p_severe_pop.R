@@ -15,7 +15,7 @@
 get_p_severe_pop <- function(pr_age10) {
 
   # Load prob(severe | age) from Shenzhen
-  prob <- fetch_data("prob_severe")
+  prob <- fetch_data("shenzhen_prob_severe")
 
   # sum all proportion of age old than 70
   pr_age10[8] <- sum(pr_age10[8:length(pr_age10)])

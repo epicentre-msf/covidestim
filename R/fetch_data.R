@@ -34,6 +34,29 @@ get_wpp_locations <- function() {
 #' @export get_posterior_shenzhen
 get_posterior_shenzhen <- function(outcome = c("severe", "moderate", "mild")) {
   outcome <- match.arg(outcome)
-  fetch_data(paste0("prob_", outcome))
+  fetch_data(paste0("shenzhen_prob_", outcome))
 }
 
+
+#' Get estimates from Vanzand
+#'
+#' @export get_wpp_locations
+get_est_vanzand <- function() {
+  fetch_data("vanzand")
+}
+
+
+#' Get estimates from Salje
+#'
+#' @export get_wpp_locations
+get_est_salje <- function() {
+  fetch_data("salje")
+}
+
+
+#' Get estimates from Davies
+#'
+#' @export get_wpp_locations
+get_est_davies <- function() {
+  fetch_data("davies")
+}

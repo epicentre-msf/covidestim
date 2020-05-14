@@ -4,12 +4,22 @@
 \alias{get_age_pop}
 \title{Get population distribution and aggregate it to 10 year age groups}
 \usage{
-get_age_pop(iso)
+get_age_pop(iso, format = c("wide", "long"))
 }
 \arguments{
 \item{iso}{country of interest}
+
+\item{format}{Data frame format to return ("wide" or "long"). "wide" yields a
+single-row data.frame with age classes as column names, whereas "long"
+yields a tidy 2-column data.frame with the first defining age classes and
+the second giving corresponding population sizes. Defaults to "wide".}
 }
 \description{
 This is set up to use population estimates from the World Populaiton
 Prospects data
+}
+\examples{
+get_age_pop(iso = "FRA")
+get_age_pop(iso = "FRA", format = "long")
+
 }
