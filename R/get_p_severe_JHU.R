@@ -9,12 +9,12 @@
 #'
 #' @examples
 #' # expected population distribution of moderate outcomes for Canada
-#' get_p_severe(iso = "CAN", outcome = "moderate")
+#' get_p_severe_JHU(iso = "CAN", outcome = "moderate")
 #'
 #' @importFrom fitdistrplus fitdist
 #' @importFrom stats quantile coef
-#' @export get_p_severe
-get_p_severe <- function(iso = "CHN", outcome = c("severe", "moderate", "mild")) {
+#' @export get_p_severe_JHU
+get_p_severe_JHU <- function(iso = "CHN", outcome = c("severe", "moderate", "mild")) {
 
   # iso <- "CHN"
   # outcome <- "severe"
@@ -33,20 +33,19 @@ get_p_severe <- function(iso = "CHN", outcome = c("severe", "moderate", "mild"))
 
   # get posterior samples of pr_outcome for total population (i.e. weighted by
   # proportion in each age category)
-  p_outcome_ <- rowSums(t(apply(prob, 1, function(x, pr) x * pr_age10_, pr = pr_age10_)))
+  p_outcome_ <- as.numeric(as.matrix(prob) %*% pr_age10_)
 
   fit_ <- fitdistrplus::fitdist(p_outcome_, "gamma", "mle")
-  # plot(fit_)
 
-  p_outcome_ <- list(ests = p_outcome_,
-                     mean = mean(p_outcome_),
-                     ll = quantile(p_outcome_, .025),
-                     ul = quantile(p_outcome_, .975),
-                     q25 = quantile(p_outcome_, .25),
-                     q75 = quantile(p_outcome_, .75),
-                     shape = coef(fit_)["shape"],
-                     rate = coef(fit_)["rate"])
+  out <- list(ests = p_outcome_,
+              mean = mean(p_outcome_),
+              ll = quantile(p_outcome_, .025),
+              ul = quantile(p_outcome_, .975),
+              q25 = quantile(p_outcome_, .25),
+              q75 = quantile(p_outcome_, .75),
+              shape = coef(fit_)["shape"],
+              rate = coef(fit_)["rate"])
 
-  return(p_outcome_)
+  return(out)
 }
 
