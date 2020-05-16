@@ -28,7 +28,7 @@ get_p_neher <- function(age_distr,
   nage_ <- nage_[1:9]                # discard >= 90
   pr_age10 <- nage_ / sum(nage_)     # proportion
 
-  df_severity <- get_severity_neher()
+  df_severity <- get_est_neher()
 
   prob <- df_severity[[p_type]]
 

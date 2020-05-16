@@ -14,6 +14,8 @@ get_severe_age_shenzhen(outcome = list("severe", "moderate", "mild"))
 Estimates probability of being a severe case by age from Shenzen data
 results from this STAN model.
 
-Data in https://www.medrxiv.org/content/10.1101/2020.03.03.20028423v3.full.pdf
+Data in Qifang et al. 2020
+https://www.medrxiv.org/content/10.1101/2020.03.03.20028423v3.full.pdf
+
 Adapted from https://github.com/HopkinsIDD/COVID19_refugees/
 }

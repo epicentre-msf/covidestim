@@ -5,7 +5,9 @@
 #' Estimates probability of being a severe case by age from Shenzen data
 #' results from this STAN model.
 #'
-#' Data in https://www.medrxiv.org/content/10.1101/2020.03.03.20028423v3.full.pdf
+#' Data in Qifang et al. 2020
+#' https://www.medrxiv.org/content/10.1101/2020.03.03.20028423v3.full.pdf
+#'
 #' Adapted from https://github.com/HopkinsIDD/COVID19_refugees/
 #'
 #' @param outcome Outcome severity ("severe", "moderate", or "mild")
@@ -18,6 +20,7 @@ get_severe_age_shenzhen <- function(outcome = list("severe", "moderate", "mild")
 
   # Functions in this repo are adapted from
   # FROM https://github.com/HopkinsIDD/COVID19_refugees/
+  # now https://github.com/HopkinsIDD/covidSeverity
 
   outcome <- match.arg(outcome)
 

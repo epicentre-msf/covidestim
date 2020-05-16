@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^docs$
+^refs$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^\.travis\.yml$

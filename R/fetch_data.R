@@ -3,7 +3,7 @@
 #' @param dataset Name of dataset to load
 #'
 #' @importFrom utils data
-#' @export fetch_data
+#' @noRd
 fetch_data <- function(dataset) {
   env <- new.env()
   x <- data(list = dataset, envir = env)[1]
@@ -16,14 +16,6 @@ fetch_data <- function(dataset) {
 #' @export get_pop_data
 get_pop_data <- function() {
   fetch_data("wpp_pop")
-}
-
-
-#' Get WPP location data
-#'
-#' @export get_wpp_locations
-get_wpp_locations <- function() {
-  fetch_data("wpp_loc")
 }
 
 
@@ -40,7 +32,7 @@ get_posterior_shenzhen <- function(outcome = c("severe", "moderate", "mild")) {
 
 #' Get estimates from Vanzand
 #'
-#' @export get_wpp_locations
+#' @export get_est_vanzand
 get_est_vanzand <- function() {
   fetch_data("vanzand")
 }
@@ -48,7 +40,7 @@ get_est_vanzand <- function() {
 
 #' Get estimates from Salje
 #'
-#' @export get_wpp_locations
+#' @export get_est_salje
 get_est_salje <- function() {
   fetch_data("salje")
 }
@@ -56,7 +48,15 @@ get_est_salje <- function() {
 
 #' Get estimates from Davies
 #'
-#' @export get_wpp_locations
+#' @export get_est_davies
 get_est_davies <- function() {
   fetch_data("davies")
+}
+
+
+#' Get estimates from Neher
+#'
+#' @export get_est_neher
+get_est_neher <- function() {
+  fetch_data("neher")
 }
