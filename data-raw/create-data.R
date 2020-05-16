@@ -8,11 +8,6 @@ wpp_loc <- readxl::read_xlsx("data-raw/pop-age-distrib/WPP2019_F01_LOCATIONS.XLS
                    iso_a3 = `ISO3 Alpha-code`,
                    parent_LocID = `Parent Location code`)
 
-# wpp_pop <- readr::read_csv("data-raw/pop-age-distrib/WPP2019_POP.csv") %>%
-#   rename(LocID = `Country code`) %>%
-#   left_join(wpp_loc, by = "LocID") %>%
-#   select(-parent_LocID, -Variant)
-
 temp <- tempfile()
 
 download.file("https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/EXCEL_FILES/1_Population/WPP2019_POP_F07_1_POPULATION_BY_AGE_BOTH_SEXES.xlsx",
@@ -21,7 +16,7 @@ download.file("https://population.un.org/wpp/Download/Files/1_Indicators%20(Stan
 wpp_pop <- readxl::read_xlsx(temp, skip = 16) %>%
   filter(Type != "Label/Separator") %>%
   mutate_at(vars(9:29), as.numeric) %>%
-  mutate(`0-10` = `0-4` + `5-9`,
+  mutate(`0-9` = `0-4` + `5-9`,
          `10-19` = `10-14` + `15-19`,
          `20-29` = `20-24` + `25-29`,
          `30-39` = `30-34` + `35-39`,
@@ -35,7 +30,7 @@ wpp_pop <- readxl::read_xlsx(temp, skip = 16) %>%
   select(location = `Region, subregion, country or area *`,
          LocID = `Country code`,
          year = `Reference date (as of 1 July)`,
-         `0-10`,
+         `0-9`,
          `10-19`,
          `20-29`,
          `30-39`,
@@ -51,6 +46,10 @@ wpp_pop <- readxl::read_xlsx(temp, skip = 16) %>%
 
 
 # each col contains samples for an age category
+## saved output from get_severe_age_shenzhen()
+outcome <- c("mild", "moderate", "severe")
+file <- paste0("data-raw/severity/shenzhen_", outcome, "_age_prob.csv")
+
 shenzhen_prob_mild <- readr::read_csv(file[1])
 shenzhen_prob_moderate <- readr::read_csv(file[2])
 shenzhen_prob_severe <- readr::read_csv(file[3])
