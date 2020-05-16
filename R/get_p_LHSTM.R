@@ -35,7 +35,7 @@ get_p_LSHTM <- function(age_distr,
     tidyr::pivot_wider(names_from = "variable", values_from = "probability")
 
 
-  df_data <- get_est_vanzand() %>%
+  df_data <- get_est_vanzandvoort() %>%
     tidyr::pivot_wider(names_from = "variable", values_from = "probability") %>%
     left_join(df_data_D, "age_group") %>%
     mutate(p_hosp_inf = p_hosp_clin * p_clin_inf,

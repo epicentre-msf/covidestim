@@ -30,11 +30,11 @@ get_posterior_shenzhen <- function(outcome = c("severe", "moderate", "mild")) {
 }
 
 
-#' Get estimates from Vanzand
+#' Get estimates from van Zandvoort
 #'
-#' @export get_est_vanzand
-get_est_vanzand <- function() {
-  fetch_data("vanzand")
+#' @export get_est_vanzandvoort
+get_est_vanzandvoort <- function() {
+  fetch_data("vanzandvoort")
 }
 
 
