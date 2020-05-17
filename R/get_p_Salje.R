@@ -10,13 +10,13 @@
 #' @examples
 #' # overall propability of hospitalization given infection for France
 #' age_dist_fr <- get_age_pop(iso = "FRA", format = "long")
-#' get_p_Salje2020(age_dist_fr, p_type = "p_hosp_inf", p_stat = "mean", p_sex = "total")
+#' get_p_Salje(age_dist_fr, p_type = "p_hosp_inf", p_stat = "mean", p_sex = "total")
 #'
-#' @export get_p_Salje2020
-get_p_Salje2020 <- function(age_distr,
-                            p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp", "p_dead_inf"),
-                            p_stat = c("mean", "low_95", "up_95"),
-                            p_sex = c("total", "male", "female")) {
+#' @export get_p_Salje
+get_p_Salje <- function(age_distr,
+                        p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp", "p_dead_inf"),
+                        p_stat = c("mean", "low_95", "up_95"),
+                        p_sex = c("total", "male", "female")) {
 
   p_type <- match.arg(p_type)
   p_stat <- match.arg(p_stat)

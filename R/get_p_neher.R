@@ -7,12 +7,12 @@
 #' @examples
 #' # overall propability of hospitalization given infection for France
 #' age_dist_fr <- get_age_pop(iso = "FRA", format = "long")
-#' get_p_neher(age_dist_fr, p_type = "p_hosp_inf")
+#' get_p_Neher(age_dist_fr, p_type = "p_hosp_inf")
 #
 #' @author Flavio Finger
 #'
-#' @export get_p_neher
-get_p_neher <- function(age_distr,
+#' @export get_p_Neher
+get_p_Neher <- function(age_distr,
                         p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp", "p_dead_inf")) {
 
   p_type <- match.arg(p_type)
