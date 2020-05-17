@@ -2,8 +2,8 @@
 % Please edit documentation in R/get_severe_age_shenzhen.R
 \name{get_severe_age_shenzhen}
 \alias{get_severe_age_shenzhen}
-\title{Run Stan model to return posterior probability of case severity by age based
-on Shenzen results}
+\title{Run model to return posterior probability of case severity by age based on
+Shenzen results}
 \usage{
 get_severe_age_shenzhen(outcome = list("severe", "moderate", "mild"))
 }
@@ -11,11 +11,11 @@ get_severe_age_shenzhen(outcome = list("severe", "moderate", "mild"))
 \item{outcome}{Outcome severity ("severe", "moderate", or "mild")}
 }
 \description{
-Estimates probability of being a severe case by age from Shenzen data
-results from this STAN model.
+Estimates probability of being a severe case by age from Shenzen data.
 
 Data in Qifang et al. 2020
 https://www.medrxiv.org/content/10.1101/2020.03.03.20028423v3.full.pdf
 
 Adapted from https://github.com/HopkinsIDD/COVID19_refugees/
+Now https://github.com/HopkinsIDD/covidSeverity ?
 }

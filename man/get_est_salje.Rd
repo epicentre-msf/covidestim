@@ -4,7 +4,14 @@
 \alias{get_est_salje}
 \title{Get estimates from Salje}
 \usage{
-get_est_salje()
+get_est_salje(sex = NULL, stat = NULL)
+}
+\arguments{
+\item{sex}{Optional sex to subset to (either "female", "male", or "total").
+Defaults to `NULL`, in which case all categories are returned.}
+
+\item{stat}{Optional statistic to subset to (either "mean", "low_95", or
+"up_95"). Defaults to `NULL`, in which case all cagegories are returned.}
 }
 \description{
 Get estimates from Salje

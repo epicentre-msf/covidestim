@@ -13,12 +13,18 @@
 #' get_age_pop(iso = "FRA")
 #' get_age_pop(iso = "FRA", format = "long")
 #'
-#' @importFrom tibble tibble as_tibble
+#' @importFrom tibble tibble
 #' @export get_age_pop
 get_age_pop <- function(iso, format = c("wide", "long")) {
 
-  # iso <- "USA"
+
   format <- match.arg(format)
+
+  if (FALSE) {
+    iso <- "USA"
+    format <- "long"
+  }
+
   pop_data <- get_pop_data()
 
   # subset to country and max year
@@ -27,24 +33,22 @@ get_age_pop <- function(iso, format = c("wide", "long")) {
 
   # print for a double check
   # print(pop_data$location)
-  pop_data <- pop_data[,c("0-9",
-                          "10-19",
-                          "20-29",
-                          "30-39",
-                          "40-49",
-                          "50-59",
-                          "60-69",
-                          "70-79",
-                          "80-89",
-                          "90-99",
-                          "100-109")]
-
-  # ensure all columns numeric
-  out <- tibble::as_tibble(lapply(pop_data, as.numeric))
+  out <- pop_data[,c("0-9",
+                     "10-19",
+                     "20-29",
+                     "30-39",
+                     "40-49",
+                     "50-59",
+                     "60-69",
+                     "70-79",
+                     "80-89",
+                     "90-99",
+                     "100-109")]
 
   # output format
   if (format == "long") {
-    out <- tibble::tibble(age_class = names(out), population = as.numeric(out[1,]))
+    out <- tibble::tibble(age_group = names(out),
+                          population = as.numeric(out[1,]))
   }
 
   return(out)

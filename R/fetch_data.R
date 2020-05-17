@@ -40,17 +40,31 @@ get_est_vanzandvoort <- function() {
 
 #' Get estimates from Salje
 #'
+#' @param sex Optional sex to subset to (either "female", "male", or "total").
+#'   Defaults to `NULL`, in which case all categories are returned.
+#' @param stat Optional statistic to subset to (either "mean", "low_95", or
+#'   "up_95"). Defaults to `NULL`, in which case all cagegories are returned.
+#'
 #' @export get_est_salje
-get_est_salje <- function() {
-  fetch_data("salje")
+get_est_salje <- function(sex = NULL, stat = NULL) {
+  dat <- fetch_data("salje")
+  if (!is.null(sex)) dat <- dat[dat$sex == sex,]
+  if (!is.null(stat)) dat <- dat[dat$stat == stat,]
+  return(dat)
 }
 
 
 #' Get estimates from Davies
 #'
+#' @param stat Optional statistic to subset to (either "mean", "median",
+#'   "low_50", "up_50", "low_95", or "up_95"). Defaults to `NULL`, in which case
+#'   all statistics are returned.
+#'
 #' @export get_est_davies
-get_est_davies <- function() {
-  fetch_data("davies")
+get_est_davies <- function(stat = NULL) {
+  dat <- fetch_data("davies")
+  if (!is.null(stat)) dat <- dat[dat$stat == stat,]
+  return(dat)
 }
 
 

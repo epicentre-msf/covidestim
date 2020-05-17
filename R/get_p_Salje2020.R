@@ -12,7 +12,6 @@
 #' age_dist_fr <- get_age_pop(iso = "FRA", format = "long")
 #' get_p_Salje2020(age_dist_fr, p_type = "p_hosp_inf", p_stat = "mean", p_sex = "total")
 #'
-#' @import dplyr
 #' @export get_p_Salje2020
 get_p_Salje2020 <- function(age_distr,
                             p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp", "p_dead_inf"),
@@ -22,34 +21,26 @@ get_p_Salje2020 <- function(age_distr,
   p_type <- match.arg(p_type)
   p_stat <- match.arg(p_stat)
 
-  if (0) {
+  # for testing purposes only
+  if (FALSE) {
+    age_distr <- get_age_pop(iso = "FRA", format = "long")
     p_type <- "p_dead_hosp"
     p_stat <- "mean"
     p_sex <- "total"
-    age_distr <- get_age_pop(iso = "FRA", format = "long")
   }
 
-  # filter data
-  df_data <- get_est_salje()
-  df_data <- df_data[df_data$variable == p_type & df_data$stat == p_stat & df_data$sex == p_sex,]
+  # get estimates from Salje for given sex and statistic
+  est_salje <- get_est_salje(sex = p_sex, stat = p_stat)
 
-  # prepare age distr
-  df_age <- age_distr %>%
-    mutate(age_group = recode(age_class,
-                              "0-9" = "0-20",
-                              "10-19" = "0-20",
-                              "80-89" = "80+",
-                              "90-99" = "80+",
-                              "100-109" = "80+")) %>%
-    group_by(age_group) %>%
-    summarize(population = sum(population)) %>%
-    ungroup() %>%
-    mutate(prop_population = population / sum(population))
+  # aggrate population age-classes to match estimate age-classes
+  age_distr_agg <- aggregate_ages(age_distr, target = est_salje$age_group)
 
-  ## return
-  df_age %>%
-    left_join(df_data, "age_group") %>%
-    summarize(p = sum(prop_population * probability)) %>%
-    pull(p)
+  # bind estimates to population data by age class
+  est_full <- merge(est_salje, age_distr_agg, all.x = TRUE)
+
+  # calculate overall population probability
+  p <- sum(est_full[["population"]] * est_full[[p_type]]) / sum(est_full[["population"]])
+
+  # return
+  return(p)
 }
-

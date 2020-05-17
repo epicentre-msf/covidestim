@@ -25,7 +25,7 @@ Zandvoort et al. 2020)
 \examples{
 # overall propability of hospitalization given infection for France
 age_dist_fr <- get_age_pop(iso = "FRA", format = "long")
-get_p_LSHTM(age_dist_fr, p_type = "p_hosp_inf", p_stat = "median")
+get_p_LSHTM(age_dist_fr, p_type = "p_hosp_inf", p_stat = "mean")
 
 }
 \author{

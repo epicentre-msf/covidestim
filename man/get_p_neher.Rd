@@ -2,8 +2,8 @@
 % Please edit documentation in R/get_p_neher.R
 \name{get_p_neher}
 \alias{get_p_neher}
-\title{Get age-adjusted probability of severe, ICU and death by country (giving ISO A3 code) according
-to the assumptions taken by the Neher lab model}
+\title{Get age-adjusted probability of severe, ICU and death by country (giving ISO
+A3 code) according to the assumptions taken by the Neher lab model}
 \usage{
 get_p_neher(
   age_distr,
@@ -16,8 +16,8 @@ get_p_neher(
 \item{p_type}{type of probablity to extract: p_hosp_inf = P(Hosp|Infection), etc}
 }
 \description{
-Get age-adjusted probability of severe, ICU and death by country (giving ISO A3 code) according
-to the assumptions taken by the Neher lab model
+Get age-adjusted probability of severe, ICU and death by country (giving ISO
+A3 code) according to the assumptions taken by the Neher lab model
 }
 \examples{
 # overall propability of hospitalization given infection for France

@@ -8,8 +8,9 @@
 A data frame with 96 rows and 5 variables:
 \describe{
   \item{age_group}{age group, in 10-year intervals}
-  \item{variable}{variable ("p_hosp_clin", "p_icu_hosp", "p_dead_hosp")}
-  \item{probability}{probability associated with given variable}
+  \item{p_hosp_clin}{probability of hospitalization given clinical}
+  \item{p_icu_hosp}{probability of ICU given hospitalization}
+  \item{p_dead_hosp}{probability of dying given hospitalization}
 }
 }
 \source{

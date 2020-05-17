@@ -7,11 +7,12 @@
 \format{
 A data frame with 9 rows and 9 variables:
 \describe{
-  \item{age}{age group, in 10-year intervals}
+  \item{age_group}{age group, in 10-year intervals}
   \item{confirmed}{probability confirmed given infection}
   \item{severe}{probability severe case given confirmed}
   \item{critical}{probability of critical case given severe}
   \item{fatal}{probability of fatal case given critical}
+  \item{p_icu_hosp}{probability of ICU given hospitalization}
   \item{p_hosp_inf}{probability of hospitalization given infection}
   \item{p_dead_hosp}{probability of dying given hospitalization}
   \item{p_dead_inf}{probability of dying given infection}

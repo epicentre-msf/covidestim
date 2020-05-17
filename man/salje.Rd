@@ -7,12 +7,14 @@
 \format{
 A data frame with 96 rows and 5 variables:
 \describe{
-  \item{variable}{variable ("p_hosp_inf", "p_icu_hosp", "p_dead_hosp", or "p_dead_inf")}
-  \item{age_group}{age group, in 10-year intervals except for first group 0-20}
+  \item{age_group}{age group, in 10-year intervals except for first group 0-19}
   \item{sex}{sex ("male", "female", or "total")}
-  \item{stat}{statistic, ("mean", "low_95", or "upp_95")}
-  \item{probability}{probability associated with given variable}
+  \item{stat}{statistic ("mean", "low_95", or "upp_95")}
   \item{quantile}{quantile corresponding to the relevant statistic}
+  \item{p_hosp_inf}{probability of hospitalization given infection}
+  \item{p_icu_hosp}{probability of ICU given hospitalization}
+  \item{p_dead_hosp}{probability death given hospitalization}
+  \item{p_dead_inf}{probability of death given infection}
 }
 }
 \source{

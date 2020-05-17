@@ -15,30 +15,35 @@
 #' @export get_p_severe_pop_JHU
 get_p_severe_pop_JHU <- function(age_distr, outcome = "severe") {
 
-  # age_distr <- get_age_pop("FRA", format = "long")
+  # for testing purposes only
+  if (FALSE) {
+    age_distr <- get_age_pop("FRA", format = "long")
+    outcome <- "severe"
+  }
 
-  # Load prob(severe | age) from Shenzhen
-  prob <- fetch_data(paste0("shenzhen_prob_", outcome))
+  # Load Pr(outcome|age) for Shenzhen
+  # rows are samples and columns age categories
+  prob <- get_posterior_shenzhen(outcome)
 
-  # sum all proportion of age old than 70
-  nage_ <- age_distr$population * 1000
-  names(nage_) <- age_distr$age_class
-  nage_[8] <- sum(nage_[8:11])          # merge >=70 years into 1 category
-  nage_ <- nage_[1:8]                   # discard >= 80
-  pr_age10_ <- nage_ / sum(nage_)       # proportion
+  # aggrate population age-classes to match estimate age-classes
+  age_distr_agg <- aggregate_ages(age_distr, target = names(prob))
 
-  p_severe_ <- as.numeric(as.matrix(prob) %*% pr_age10_)
+  # proportional age structure
+  prop_age_pop <- age_distr_agg$population / sum(age_distr_agg$population)
 
-  fit_ <- fitdistrplus::fitdist(p_severe_, "gamma", "mle")
+  # get posterior samples of pr_outcome for total population (i.e. weighted by
+  # proportion in each age category)
+  p_outcome <- as.numeric(as.matrix(prob) %*% prop_age_pop)
 
-  out <- list(ests = p_severe_,
-              mean = mean(p_severe_),
-              ll = quantile(p_severe_, .025),
-              ul = quantile(p_severe_, .975),
-              q25 = quantile(p_severe_, .25),
-              q75 = quantile(p_severe_, .75),
-              shape = coef(fit_)["shape"],
-              rate = coef(fit_)["rate"])
+  # fit model and return
+  fit <- fitdistrplus::fitdist(p_outcome, "gamma", "mle")
 
-  return(out)
+  return(list(ests = p_outcome,
+              mean = mean(p_outcome),
+              ll = quantile(p_outcome, 0.025),
+              ul = quantile(p_outcome, 0.975),
+              q25 = quantile(p_outcome, 0.25),
+              q75 = quantile(p_outcome, 0.75),
+              shape = coef(fit)["shape"],
+              rate = coef(fit)["rate"]))
 }

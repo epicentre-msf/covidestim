@@ -4,7 +4,12 @@
 \alias{get_est_davies}
 \title{Get estimates from Davies}
 \usage{
-get_est_davies()
+get_est_davies(stat = NULL)
+}
+\arguments{
+\item{stat}{Optional statistic to subset to (either "mean", "median",
+"low_50", "up_50", "low_95", or "up_95"). Defaults to `NULL`, in which case
+all statistics are returned.}
 }
 \description{
 Get estimates from Davies
