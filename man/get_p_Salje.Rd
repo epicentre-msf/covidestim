@@ -5,14 +5,17 @@
 \title{Get age-sex specific probabilities estimated by Salje et al. 2020}
 \usage{
 get_p_Salje(
-  age_distr,
+  x,
   p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp", "p_dead_inf"),
   p_stat = c("mean", "low_95", "up_95"),
   p_sex = c("total", "male", "female")
 )
 }
 \arguments{
-\item{age_distr}{age distribution data-frame}
+\item{x}{Either an ISO3 country code used to extract age-specific population
+estimates from the UN World Population Prospects 2019 dataset, \emph{or}, a
+data.frame containing age categories in the first column and population
+counts (or proportions) in the second column}
 
 \item{p_type}{type of probablity to extract: p_hosp_inf = P(Hosp|Infection), etc}
 
@@ -20,13 +23,24 @@ get_p_Salje(
 
 \item{p_sex}{get estimates by sex or for total population}
 }
+\value{
+Probability (scalar)
+}
 \description{
 Get age-sex specific probabilities estimated by Salje et al. 2020
 }
 \examples{
-# overall propability of hospitalization given infection for France
-age_dist_fr <- get_age_pop(iso = "FRA", format = "long")
-get_p_Salje(age_dist_fr, p_type = "p_hosp_inf", p_stat = "mean", p_sex = "total")
+# mean Pr(hospitalization|infection) for Canada (ISO3 code "CAN"), taking age
+# distribution from WPP2019
+get_p_Salje(x = "CAN", p_type = "p_hosp_inf", p_stat = "mean", p_sex = "total")
+
+# use custom age-distribution
+age_df <- data.frame(
+  age = c("0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"),
+  pop = c(1023, 1720, 2422, 3456, 3866, 4104, 4003, 3576, 1210),
+  stringsAsFactors = FALSE
+)
+get_p_Salje(x = age_df, p_type = "p_hosp_inf", p_stat = "mean", p_sex = "total")
 
 }
 \author{

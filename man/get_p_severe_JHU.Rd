@@ -2,22 +2,55 @@
 % Please edit documentation in R/get_p_severe_JHU.R
 \name{get_p_severe_JHU}
 \alias{get_p_severe_JHU}
-\title{Get population-wide distribution of severe outcomes}
+\title{Estimate probability distribution of mild/moderate/severe Covid19 outcomes
+for a population given its age distribution}
 \usage{
-get_p_severe_JHU(iso = "CHN", outcome = c("severe", "moderate", "mild"))
+get_p_severe_JHU(
+  x,
+  outcome = c("severe", "moderate", "mild"),
+  return_draws = FALSE
+)
 }
 \arguments{
-\item{iso}{iso_a3 of country of interest}
+\item{x}{Either an ISO3 country code used to extract age-specific population
+estimates from the UN World Population Prospects 2019 dataset, \emph{or}, a
+data.frame containing age categories in the first column and population
+counts (or proportions) in the second column}
 
-\item{outcome}{Outcome severity ("severe", "moderate", or "mild")}
+\item{outcome}{Outcome category ("severe", "moderate", or "mild")}
+
+\item{return_draws}{Logical indicating whether to include vector of draws
+from the posterior distribution of outcome probabilities in the returned
+list. Defaults to `FALSE`.}
+}
+\value{
+A list with 8 elements relating to the posterior distribution of outcome
+probabilities for the population of interest, taken over all age classes:
+  \item{ests}{vector of 2000 draws from posterior distribution}
+  \item{mean}{mean of posterior distribution}
+  \item{ll}{lower 95\% CI of posterior distribution}
+  \item{ul}{upper 95\% CI of posterior distribution}
+  \item{q25}{lower 50\% CI of posterior distribution}
+  \item{q75}{upper 50\% CI of posterior distribution}
+  \item{shape}{shape parameter of gamma distribution fit to posterior distribution}
+  \item{rate}{rate parameter of gamma distribution fit to posterior distribution}
 }
 \description{
-This is set up to use population estimates from the World Populaiton
-Prospects data, and age-specific probabilities of outcome severity from
-Shenzhen
+Based on age-specific outcome severity data from Shenzhen, China (Bi et al.
+2020). Population age distributions can either be taken from the UN World
+Population Prospects 2019 (WPP2019), or directly supplied by the user.
 }
 \examples{
-# expected population distribution of moderate outcomes for Canada
-get_p_severe_JHU(iso = "CAN", outcome = "moderate")
+# expected population distribution of severe outcomes for Canada (ISO3 code
+# "CAN"), taking age distribution from WPP2019
+get_p_severe_JHU(x = "CAN", outcome = "severe")
+
+# use custom age-distribution
+age_df <- data.frame(
+  age = c("0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70+"),
+  pop = c(1023, 1720, 2422, 3456, 3866, 4104, 4003, 3576),
+  stringsAsFactors = FALSE
+)
+get_p_severe_JHU(x = age_df, outcome = "severe")
 
 }

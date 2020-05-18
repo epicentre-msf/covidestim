@@ -2,13 +2,16 @@
 % Please edit documentation in R/get_severe_age_Shenzhen.R
 \name{get_severe_age_Shenzhen}
 \alias{get_severe_age_Shenzhen}
-\title{Run model to return posterior probability of case severity by age based on
-Shenzen results}
+\title{Model the posterior probability of Covid19 case severity by age group based on
+data from Shenzen, China}
 \usage{
 get_severe_age_Shenzhen(outcome = list("severe", "moderate", "mild"))
 }
 \arguments{
-\item{outcome}{Outcome severity ("severe", "moderate", or "mild")}
+\item{outcome}{Outcome category ("severe", "moderate", or "mild")}
+}
+\value{
+data.frame
 }
 \description{
 Estimates probability of being a severe case by age from Shenzen data.

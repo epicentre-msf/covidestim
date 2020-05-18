@@ -1,5 +1,5 @@
-#' Run model to return posterior probability of case severity by age based on
-#' Shenzen results
+#' Model the posterior probability of Covid19 case severity by age group based on
+#' data from Shenzen, China
 #'
 #' @description
 #' Estimates probability of being a severe case by age from Shenzen data.
@@ -10,7 +10,10 @@
 #' Adapted from https://github.com/HopkinsIDD/COVID19_refugees/
 #' Now https://github.com/HopkinsIDD/covidSeverity ?
 #'
-#' @param outcome Outcome severity ("severe", "moderate", or "mild")
+#' @param outcome Outcome category ("severe", "moderate", or "mild")
+#'
+#' @return
+#' data.frame
 #'
 #' @export get_severe_age_Shenzhen
 get_severe_age_Shenzhen <- function(outcome = list("severe", "moderate", "mild")) {

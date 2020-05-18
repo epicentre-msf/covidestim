@@ -25,7 +25,7 @@ aggregate_ages <- function(x, target) {
 
   ## sum population sizes by age group
   x$age_group <- age_reclass
-  aggregate(population ~ age_group, sum, data = x)
+  aggregate(pop ~ age_group, sum, data = x)
 }
 
 
@@ -63,3 +63,20 @@ extract_range <- function(x, n = c(1, 2)) {
   return(as.numeric(r))
 }
 
+
+#' @noRd
+prep_age_distib <- function(x) {
+  if (is.character(x)) {
+    # get age distrib from WPP2019 based on ISO code
+    age_distr <- get_age_pop(x, format = "long")
+  } else if (is.data.frame(x)) {
+    # use user-provided age distribution
+    age_distr <- x[,1:2]
+    names(age_distr) <- c("age_group", "pop")
+  } else {
+    stop("`x` must be a 3-character ISO code, or a data.frame with age ",
+         "categories in the 1st column and population counts in the 2nd",
+         call. = FALSE)
+  }
+  return(age_distr)
+}

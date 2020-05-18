@@ -48,7 +48,7 @@ get_age_pop <- function(iso, format = c("wide", "long")) {
   # output format
   if (format == "long") {
     out <- tibble::tibble(age_group = names(out),
-                          population = as.numeric(out[1,]))
+                          pop = as.numeric(out[1,]))
   }
 
   return(out)
