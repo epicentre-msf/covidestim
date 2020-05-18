@@ -2,7 +2,14 @@
 % Please edit documentation in R/get_p_Salje.R
 \name{get_p_Salje}
 \alias{get_p_Salje}
-\title{Get age-sex specific probabilities estimated by Salje et al. 2020}
+\title{Estimate Covid2019 outcome probabilities for a population given its age
+distribution, and age-severity estimates from Salje et al. (2020)}
+\source{
+Salje, H., Kiem, C.T., Lefrancq, N., Courtejoie, N., Bosetti, P., Paireau,
+J., Andronico, A., Hoze, N., Richet, J., Dubost, C.L., and Le Strat, Y.
+(2020) Estimating the burden of SARS-CoV-2 in France. Science.
+\url{https://doi.org/10.1126/science.abc3517}
+}
 \usage{
 get_p_Salje(
   x,
@@ -17,17 +24,24 @@ estimates from the UN World Population Prospects 2019 dataset, \emph{or}, a
 data.frame containing age categories in the first column and population
 counts (or proportions) in the second column}
 
-\item{p_type}{type of probablity to extract: p_hosp_inf = P(Hosp|Infection), etc}
+\item{p_type}{Outcome to estimate (either "p_hosp_inf", "p_icu_hosp",
+"p_dead_hosp", or "p_dead_inf")}
 
-\item{p_stat}{quantile of the original estimates used to compute probability}
+\item{p_stat}{Statistic of the severity estimates to use (either "mean",
+"low_95", or "up_95")}
 
-\item{p_sex}{get estimates by sex or for total population}
+\item{p_sex}{Use severity estimate for which sex (either "female", "male", or
+"total")}
 }
 \value{
-Probability (scalar)
+Estimated outcome probability (scalar)
 }
 \description{
-Get age-sex specific probabilities estimated by Salje et al. 2020
+Estimate Covid19 outcome probabilities including hospitalizion|infection,
+ICU|hospitalization, death|hospitalization, and death|infection, using
+age-severity estimates from Salje et al. (2020), and the population age
+distribution for a given country, either taken from the UN World Population
+Prospects 2019 (WPP2019) or directly supplied by the user.
 }
 \examples{
 # mean Pr(hospitalization|infection) for Canada (ISO3 code "CAN"), taking age
@@ -40,9 +54,12 @@ age_df <- data.frame(
   pop = c(1023, 1720, 2422, 3456, 3866, 4104, 4003, 3576, 1210),
   stringsAsFactors = FALSE
 )
+
 get_p_Salje(x = age_df, p_type = "p_hosp_inf", p_stat = "mean", p_sex = "total")
 
 }
 \author{
 Anton Camacho
+
+Patrick Barks <patrick.barks@epicentre.msf.org>
 }

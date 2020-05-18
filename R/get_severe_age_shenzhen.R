@@ -1,22 +1,34 @@
-#' Model the posterior probability of Covid19 case severity by age group based on
-#' data from Shenzen, China
+#' Model the probability of Covid19 outcome type (mild, moderate, severe) by age
+#' group based on data from Shenzen, China (Bi et al. 2020)
 #'
-#' @description
-#' Estimates probability of being a severe case by age from Shenzen data.
-#'
-#' Data in Bi et al. 2020
-#' https://www.medrxiv.org/content/10.1101/2020.03.03.20028423v3.full.pdf
-#'
-#' Adapted from https://github.com/HopkinsIDD/COVID19_refugees/
-#' Now https://github.com/HopkinsIDD/covidSeverity ?
+#' Adapted from https://github.com/HopkinsIDD/covidSeverity
 #'
 #' @param outcome Outcome category ("severe", "moderate", or "mild")
+#' @param nsamples Number of samples to draw (defaults to 2000)
 #'
 #' @return
-#' data.frame
+#' A data.frame with \code{nsamples} rows and 8 columns, corresponding to each
+#' age group (`0-9`, `10-19`, ..., `70+`)
+#'
+#' @author Patrick Barks <patrick.barks@@epicentre.msf.org>
+#'
+#' @source
+#' Bi, Q., Wu, Y., Mei, S., Ye, C., Zou, X., Zhang, Z., Liu, X., Wei, L.,
+#' Truelove, S., Zhang, T., Gao, W., Cheng, C., Tang, X., ..., and Feng, .T.
+#' (2020) Epidemiology and Transmission of COVID-19 in Shenzhen China: Analysis
+#' of 391 cases and 1,286 of their close contacts. medRxiv preprint.
+#' \url{https://doi.org/10.1101/2020.03.03.20028423}
+#'
+#' @examples
+#' # draws from the posterior distribution of probability of severe outcome
+#' post_samples <- get_severe_age_Shenzhen("severe")
+#'
+#' # posterior median probability of severe outcomes for each age group
+#' apply(post_samples, 2, median)
 #'
 #' @export get_severe_age_Shenzhen
-get_severe_age_Shenzhen <- function(outcome = list("severe", "moderate", "mild")) {
+get_severe_age_Shenzhen <- function(outcome = c("severe", "moderate", "mild"),
+                                    nsamples = 2000) {
 
   outcome <- match.arg(outcome)
 
@@ -29,10 +41,16 @@ get_severe_age_Shenzhen <- function(outcome = list("severe", "moderate", "mild")
   dat <- fetch_data("bi")
 
   # generate samples from posterior distribution for given outcome type
-  mapply(sample_binomial_posterior,
-         k = dat[[outcome]],
-         n = dat$total,
-         nsamples = 4000)
+  out <- mapply(sample_binomial_posterior,
+                k = dat[[outcome]],
+                n = dat$total,
+                nsamples = nsamples)
+
+  # convert to df and return
+  out <- as.data.frame(out)
+  names(out) <- dat$age_group
+
+  return(out)
 }
 
 

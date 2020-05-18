@@ -1,14 +1,27 @@
-#' Get age-adjusted probability of severe, ICU and death by country (giving ISO
-#' A3 code) according to the assumptions taken by the Neher lab model
+#' Estimate Covid2019 outcome probabilities for a population given its age
+#' distribution, and age-severity estimates from the Neher Lab
+#'
+#' @description
+#' Estimate Covid19 outcome probabilities including hospitalizion|infection,
+#' ICU|hospitalization, death|hospitalization, and death|infection, using
+#' age-severity estimates from the Neher Lab, and the population age
+#' distribution for a given country, either taken from the UN World Population
+#' Prospects 2019 (WPP2019) or directly supplied by the user.
 #'
 #' @param x Either an ISO3 country code used to extract age-specific population
 #'   estimates from the UN World Population Prospects 2019 dataset, \emph{or}, a
 #'   data.frame containing age categories in the first column and population
 #'   counts (or proportions) in the second column
-#' @param p_type type of probablity to extract: p_hosp_inf = P(Hosp|Infection), etc
+#' @param p_type Outcome to estimate (either "p_hosp_inf", "p_icu_hosp",
+#'   "p_dead_hosp", or "p_dead_inf")
 #'
 #' @return
-#' Probability (scalar)
+#' Estimated outcome probability (scalar)
+#'
+#' @author Flavio Finger
+#' @author Patrick Barks <patrick.barks@@epicentre.msf.org>
+#'
+#' @source \url{https://covid19-scenarios.org/}
 #'
 #' @examples
 #' # mean Pr(hospitalization|infection) for Canada (ISO3 code "CAN"), taking age
@@ -21,9 +34,8 @@
 #'   pop = c(1023, 1720, 2422, 3456, 3866, 4104, 4003, 3576, 1210),
 #'   stringsAsFactors = FALSE
 #' )
-#' get_p_Neher(x = age_df, p_type = "p_hosp_inf")
 #'
-#' @author Flavio Finger
+#' get_p_Neher(x = age_df, p_type = "p_hosp_inf")
 #'
 #' @export get_p_Neher
 get_p_Neher <- function(x,

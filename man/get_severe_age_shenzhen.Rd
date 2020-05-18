@@ -2,23 +2,41 @@
 % Please edit documentation in R/get_severe_age_Shenzhen.R
 \name{get_severe_age_Shenzhen}
 \alias{get_severe_age_Shenzhen}
-\title{Model the posterior probability of Covid19 case severity by age group based on
-data from Shenzen, China}
+\title{Model the probability of Covid19 outcome type (mild, moderate, severe) by age
+group based on data from Shenzen, China (Bi et al. 2020)}
+\source{
+Bi, Q., Wu, Y., Mei, S., Ye, C., Zou, X., Zhang, Z., Liu, X., Wei, L.,
+Truelove, S., Zhang, T., Gao, W., Cheng, C., Tang, X., ..., and Feng, .T.
+(2020) Epidemiology and Transmission of COVID-19 in Shenzhen China: Analysis
+of 391 cases and 1,286 of their close contacts. medRxiv preprint.
+\url{https://doi.org/10.1101/2020.03.03.20028423}
+}
 \usage{
-get_severe_age_Shenzhen(outcome = list("severe", "moderate", "mild"))
+get_severe_age_Shenzhen(
+  outcome = c("severe", "moderate", "mild"),
+  nsamples = 2000
+)
 }
 \arguments{
 \item{outcome}{Outcome category ("severe", "moderate", or "mild")}
+
+\item{nsamples}{Number of samples to draw (defaults to 2000)}
 }
 \value{
-data.frame
+A data.frame with \code{nsamples} rows and 8 columns, corresponding to each
+age group (`0-9`, `10-19`, ..., `70+`)
 }
 \description{
-Estimates probability of being a severe case by age from Shenzen data.
+Adapted from https://github.com/HopkinsIDD/covidSeverity
+}
+\examples{
+# draws from the posterior distribution of probability of severe outcome
+post_samples <- get_severe_age_Shenzhen("severe")
 
-Data in Bi et al. 2020
-https://www.medrxiv.org/content/10.1101/2020.03.03.20028423v3.full.pdf
+# posterior median probability of severe outcomes for each age group
+apply(post_samples, 2, median)
 
-Adapted from https://github.com/HopkinsIDD/COVID19_refugees/
-Now https://github.com/HopkinsIDD/covidSeverity ?
+}
+\author{
+Patrick Barks <patrick.barks@epicentre.msf.org>
 }

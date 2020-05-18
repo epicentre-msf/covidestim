@@ -1,17 +1,43 @@
-#' Get age specific probabilities estimated by LSHTM (Davies et al. 2020 and Van
-#' Zandvoort et al. 2020)
+#' Estimate Covid2019 outcome probabilities for a population given its age
+#' distribution, and age-severity estimates used by LHSTM
+#'
+#' @description
+#' Estimate Covid19 outcome probabilities including hospitalizion|infection,
+#' ICU|hospitalization, death|hospitalization, and death|infection, using
+#' age-specific outcomes estimates of Pr(Clinical|Infection) from Davies et al.
+#' (2020) (with confidence intervals) and point estimates of
+#' Pr(hospitalization|clinical), Pr(ICU|hospitalization), and
+#' Pr(dead|hospitalization) from Van Zandvoort et al. (2020).
+#'
+#' Population age distributions can either be taken from the UN World
+#' Population Prospects 2019 (WPP2019), or directly supplied by the user.
 #'
 #' @param x Either an ISO3 country code used to extract age-specific population
 #'   estimates from the UN World Population Prospects 2019 dataset, \emph{or}, a
 #'   data.frame containing age categories in the first column and population
 #'   counts (or proportions) in the second column
-#' @param p_type type of probablity to extract: p_hosp_inf = P(Hosp|Infection), etc
-#' @param p_stat quantile of the original estimates used to compute probability
+#' @param p_type Outcome to estimate (either "p_hosp_inf", "p_icu_hosp",
+#'   "p_dead_hosp", or "p_dead_inf")
+#' @param p_stat Statistic of the severity estimates to use (either "mean",
+#'   "median", "low_95", "up_95", "low_50", or "up_50")
 #'
 #' @return
-#' Probability (scalar)
+#' Estimated outcome probability (scalar)
 #'
 #' @author Anton Camacho
+#' @author Patrick Barks <patrick.barks@@epicentre.msf.org>
+#'
+#' @source
+#' van Zandvoort, K., Jarvis, C.I., Pearson, C., Davies, N.G., CMMID COVID-19
+#' Working Group, Russell, T.W., Kucharski, A.J., Jit, M.J., Flasche, S., Eggo,
+#' R.M., and Checchi, F. (2020) Response strategies for COVID-19 epidemics in
+#' African settings: a mathematical modelling study. medRxiv preprint.
+#' \url{https://doi.org/10.1101/2020.04.27.20081711}
+#'
+#' Davies, N.G., Klepac, P., Liu, Y., Prem, K., Jit, M., CMMID COVID-19 Working
+#' Group, and Eggo, R.M. (2020) Age-dependent effects in the transmission and
+#' control of COVID-19 epidemics. medRxiv preprint.
+#' \url{https://doi.org/10.1101/2020.03.24.20043018}
 #'
 #' @examples
 #' # mean Pr(hospitalization|infection) for Canada (ISO3 code "CAN"), taking age
@@ -24,6 +50,7 @@
 #'   pop = c(1023, 1720, 2422, 3456, 3866, 4104, 4003, 3576, 1210),
 #'   stringsAsFactors = FALSE
 #' )
+#'
 #' get_p_LSHTM(x = age_df, p_type = "p_hosp_inf", p_stat = "mean")
 #'
 #' @export get_p_LSHTM
