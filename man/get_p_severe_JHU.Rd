@@ -16,7 +16,8 @@ of 391 cases and 1,286 of their close contacts. medRxiv preprint.
 get_p_severe_JHU(
   x,
   outcome = c("severe", "moderate", "mild"),
-  return_draws = FALSE
+  return_draws = FALSE,
+  use_orig_jhu = FALSE
 )
 }
 \arguments{
@@ -29,7 +30,10 @@ counts (or proportions) in the second column}
 
 \item{return_draws}{Logical indicating whether to include vector of draws
 from the posterior distribution of outcome probabilities in the returned
-list. Defaults to `FALSE`.}
+list. Defaults to \code{FALSE}.}
+
+\item{use_orig_jhu}{Logical indicating whether to use posterior draws from
+the original model by JHU. Defaults to \code{FALSE}}
 }
 \value{
 A list with 8 elements relating to the posterior distribution of

@@ -51,15 +51,20 @@ wpp_pop <- file.path("data-raw/pop-age-distrib/WPP2019_POP_F07_1_POPULATION_BY_A
 
 # each col contains samples for an age category
 ## saved output from get_severe_age_shenzhen()
+
+shenzhen_prob_mild <- get_severe_age_Shenzhen("mild")
+shenzhen_prob_moderate <- get_severe_age_Shenzhen("moderate")
+shenzhen_prob_severe <- get_severe_age_Shenzhen("severe")
+
 outcome <- c("mild", "moderate", "severe")
 file <- paste0("data-raw/severity/shenzhen_", outcome, "_age_prob.csv")
 
-shenzhen_prob_mild <- readr::read_csv(file[1])
-shenzhen_prob_moderate <- readr::read_csv(file[2])
-shenzhen_prob_severe <- readr::read_csv(file[3])
+shenzhen_prob_mild_orig <- readr::read_csv(file[1])
+shenzhen_prob_moderate_orig <- readr::read_csv(file[2])
+shenzhen_prob_severe_orig <- readr::read_csv(file[3])
 
 age_cat <- c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70+")
-names(shenzhen_prob_mild) <- names(shenzhen_prob_moderate) <- names(shenzhen_prob_severe) <- age_cat
+names(shenzhen_prob_mild_orig) <- names(shenzhen_prob_moderate_orig) <- names(shenzhen_prob_severe_orig) <- age_cat
 
 
 ## Davies et al. 2020, preprint
@@ -121,6 +126,9 @@ usethis::use_data(wpp_pop,
                   shenzhen_prob_mild,
                   shenzhen_prob_moderate,
                   shenzhen_prob_severe,
+                  shenzhen_prob_mild_orig,
+                  shenzhen_prob_moderate_orig,
+                  shenzhen_prob_severe_orig,
                   neher,
                   davies,
                   salje,

@@ -13,7 +13,9 @@
 #' @param outcome Outcome category ("severe", "moderate", or "mild")
 #' @param return_draws Logical indicating whether to include vector of draws
 #'   from the posterior distribution of outcome probabilities in the returned
-#'   list. Defaults to `FALSE`.
+#'   list. Defaults to \code{FALSE}.
+#' @param use_orig_jhu Logical indicating whether to use posterior draws from
+#'   the original model by JHU. Defaults to \code{FALSE}
 #'
 #' @return A list with 8 elements relating to the posterior distribution of
 #' outcome probabilities for the population of interest, taken over all age
@@ -53,13 +55,17 @@
 #' @export get_p_severe_JHU
 get_p_severe_JHU <- function(x,
                              outcome = c("severe", "moderate", "mild"),
-                             return_draws = FALSE) {
+                             return_draws = FALSE,
+                             use_orig_jhu = FALSE) {
 
   outcome <- match.arg(outcome)
 
   # for testing purposes only
   if (FALSE) {
-    x <- "CHN"; outcome <- "severe"; return_draws = FALSE
+    x <- "CHN"
+    outcome <- "severe"
+    return_draws < FALSE
+    use_orig_jhu <- TRUE
   }
 
   # prepare age distribution
@@ -67,7 +73,11 @@ get_p_severe_JHU <- function(x,
 
   # Load Pr(outcome|age) for Shenzhen
   # rows are samples and columns are age categories
-  prob <- get_posterior_shenzhen(outcome)
+  prob <- if (use_orig_jhu) {
+    fetch_data(paste0("shenzhen_prob_", outcome))
+  } else {
+    fetch_data(paste0("shenzhen_prob_", outcome, "_orig"))
+  }
 
   # aggrate population age-classes to match estimate age-classes
   age_distr_agg <- aggregate_ages(age_distr, target = names(prob))
@@ -95,3 +105,4 @@ get_p_severe_JHU <- function(x,
 
   return(out)
 }
+
