@@ -6,7 +6,7 @@
 #' @noRd
 fetch_data <- function(dataset) {
   env <- new.env()
-  x <- data(list = dataset, envir = env)[1]
+  x <- data(list = dataset, package = "covidestim", envir = env)[1]
   return(env[[x]])
 }
 
@@ -74,3 +74,4 @@ get_est_davies <- function(stat = NULL) {
 get_est_neher <- function() {
   fetch_data("neher")
 }
+
