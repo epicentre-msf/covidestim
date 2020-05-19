@@ -2,21 +2,31 @@
 % Please edit documentation in R/get_age_pop.R
 \name{get_age_pop}
 \alias{get_age_pop}
-\title{Get population distribution and aggregate it to 10 year age groups}
+\title{Extract age-specific population estimates for a given country from the UN
+World Population Prospects 2019}
+\source{
+\url{https://population.un.org/wpp/Download/Standard/Population/}
+}
 \usage{
 get_age_pop(iso, format = c("wide", "long"))
 }
 \arguments{
-\item{iso}{country of interest}
+\item{iso}{ISO3 code for country of interest}
 
-\item{format}{Data frame format to return ("wide" or "long"). "wide" yields a
+\item{format}{Return format ("wide" or "long"). Format "wide" yields a
 single-row data.frame with age classes as column names, whereas "long"
-yields a tidy 2-column data.frame with the first defining age classes and
-the second giving corresponding population sizes. Defaults to "wide".}
+yields a 2-column data.frame with the first defining age classes and the
+second giving corresponding population sizes. Defaults to "wide".}
+}
+\value{
+A data.frame. If \code{format = "wide"} returns a single-row data.frame with
+age classes as column names, whereas if \code{format = "long"} returns a
+2-column data.frame with the first defining age classes and the second giving
+corresponding population sizes.
 }
 \description{
-This is set up to use population estimates from the World Populaiton
-Prospects data
+Extract population estimates in 10-year age intervals for a given country
+from the UN World Population Prospects 2019 (WPP2019).
 }
 \examples{
 get_age_pop(iso = "FRA")
