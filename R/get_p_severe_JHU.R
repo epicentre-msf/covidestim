@@ -74,9 +74,9 @@ get_p_severe_JHU <- function(x,
   # Load Pr(outcome|age) for Shenzhen
   # rows are samples and columns are age categories
   prob <- if (use_orig_jhu) {
-    fetch_data(paste0("shenzhen_prob_", outcome))
-  } else {
     fetch_data(paste0("shenzhen_prob_", outcome, "_orig"))
+  } else {
+    fetch_data(paste0("shenzhen_prob_", outcome))
   }
 
   # aggrate population age-classes to match estimate age-classes
