@@ -46,7 +46,8 @@ wpp_pop <- file.path("data-raw/pop-age-distrib/WPP2019_POP_F07_1_POPULATION_BY_A
          `90-99`,
          `100-109`) %>%
   left_join(wpp_loc, by = "LocID") %>%
-  select(-parent_LocID)
+  select(-parent_LocID) %>%
+  as.data.frame()
 
 
 # each col contains samples for an age category
@@ -59,9 +60,9 @@ shenzhen_prob_severe <- get_severe_age_Shenzhen("severe")
 outcome <- c("mild", "moderate", "severe")
 file <- paste0("data-raw/severity/shenzhen_", outcome, "_age_prob.csv")
 
-shenzhen_prob_mild_orig <- readr::read_csv(file[1])
-shenzhen_prob_moderate_orig <- readr::read_csv(file[2])
-shenzhen_prob_severe_orig <- readr::read_csv(file[3])
+shenzhen_prob_mild_orig <- readr::read_csv(file[1]) %>% as.data.frame()
+shenzhen_prob_moderate_orig <- readr::read_csv(file[2]) %>% as.data.frame()
+shenzhen_prob_severe_orig <- readr::read_csv(file[3]) %>% as.data.frame()
 
 age_cat <- c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70+")
 names(shenzhen_prob_mild_orig) <- names(shenzhen_prob_moderate_orig) <- names(shenzhen_prob_severe_orig) <- age_cat
@@ -73,7 +74,8 @@ names(shenzhen_prob_mild_orig) <- names(shenzhen_prob_moderate_orig) <- names(sh
 # Extended Data Table 1
 davies <- readr::read_csv("data-raw/severity/tabS1_Davies2020.csv") %>%
   filter(variable == "p_clin_inf") %>%
-  tidyr::pivot_wider(names_from = "variable", values_from = "probability")
+  tidyr::pivot_wider(names_from = "variable", values_from = "probability") %>%
+  as.data.frame()
   # tidyr::pivot_wider(-quantile, names_from = "stat", values_from = "p_clin_inf")
 
 
@@ -82,7 +84,8 @@ davies <- readr::read_csv("data-raw/severity/tabS1_Davies2020.csv") %>%
 # https://doi.org/10.1126/science.abc3517
 # Table S1 and S2
 salje <- readr::read_csv("data-raw/severity/tabS1S2_Salje_2020.csv") %>%
-  tidyr::pivot_wider(names_from = "variable", values_from = "probability")
+  tidyr::pivot_wider(names_from = "variable", values_from = "probability") %>%
+  as.data.frame()
 
 
 ## van Zandvoort et al. 2020, preprint
@@ -91,7 +94,8 @@ salje <- readr::read_csv("data-raw/severity/tabS1S2_Salje_2020.csv") %>%
 # https://doi.org/10.1101/2020.04.27.20081711
 # Table S2
 vanzandvoort <- readr::read_csv("data-raw/severity/tabS2_VanZandvoort2020.csv") %>%
-  tidyr::pivot_wider(names_from = "variable", values_from = "probability")
+  tidyr::pivot_wider(names_from = "variable", values_from = "probability") %>%
+  as.data.frame()
 
 
 ## Neher lab age-severity estimates
@@ -104,7 +108,8 @@ neher <- readr::read_csv("data-raw/severity/age_specific_params_Neher.csv") %>%
     mutate(p_hosp_inf = confirmed * severe,
            p_icu_hosp = critical,
            p_dead_hosp = critical * fatal,
-           p_dead_inf = p_dead_hosp * p_hosp_inf)
+           p_dead_inf = p_dead_hosp * p_hosp_inf) %>%
+  as.data.frame()
 
 
 ## Bi et al. 2020, preprint
@@ -117,7 +122,8 @@ bi <- tibble::tibble(
   fever_no = c(6,3,3,13,6,10,16,4),
   fever_yes = c(14,9,31,74,54,64,70,14)
 ) %>%
-  mutate(total = fever_no + fever_yes)
+  mutate(total = fever_no + fever_yes) %>%
+  as.data.frame()
 
 
 

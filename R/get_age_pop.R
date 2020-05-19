@@ -13,7 +13,6 @@
 #' get_age_pop(iso = "FRA")
 #' get_age_pop(iso = "FRA", format = "long")
 #'
-#' @importFrom tibble tibble
 #' @export get_age_pop
 get_age_pop <- function(iso, format = c("wide", "long")) {
 
@@ -47,8 +46,9 @@ get_age_pop <- function(iso, format = c("wide", "long")) {
 
   # output format
   if (format == "long") {
-    out <- tibble::tibble(age_group = names(out),
-                          pop = as.numeric(out[1,]))
+    out <- data.frame(age_group = names(out),
+                      pop = as.numeric(out[1,]),
+                      stringsAsFactors = FALSE)
   }
 
   return(out)
