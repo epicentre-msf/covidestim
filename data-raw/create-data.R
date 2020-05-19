@@ -165,3 +165,19 @@ usethis::use_data(wpp_pop,
                   bi,
                   overwrite = TRUE)
 
+
+
+# library(ggplot2)
+# library(ggsci)
+#
+# ests_full <- compare_age_severity(jhu_model = "JHU Original")
+#
+# ggplot(ests_full, aes(x = age_group, y = mean, color = group)) +
+#   geom_point(position = position_dodge(width = 0.51), size = 3) +
+#   geom_linerange(aes(ymin = low95, ymax = upp95), position = position_dodge(width = 0.51), size = 1.1) +
+#   labs(x = "Age group",
+#        y = "Pr(hospitalization|infection)",
+#        color = "Research group") +
+#   scale_color_nejm() +
+#   theme_bw() +
+#   theme(legend.position = "top")
