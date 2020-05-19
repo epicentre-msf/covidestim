@@ -2,10 +2,21 @@ Package: covidestim
 Type: Package
 Title: Estimates Of Epidemiological Parameters For COVID19
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: Tools for estimating the expected population-distribution of
-    disease severity given population parameters such as age structure.
+Authors@R: c(
+    person(given = "Anton", 
+           family = "Camacho", 
+           role = "aut"),
+    person(given = "Flavio", 
+           family = "Finger", 
+           role = "aut"),
+    person(given = "Patrick",
+           family = "Barks",
+           role = c("cre"),
+           email = "patrick.barks@epicentre.msf.org"))
+Description: Estimate population-level covid19 outcome probabilities (e.g.
+    hospitalization|infection), given the age-distribution of a population of
+    interest and severity estimates (by age, sex, etc.) from various research
+    groups.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
