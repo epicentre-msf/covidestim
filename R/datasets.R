@@ -135,3 +135,17 @@
 #'   of their close contacts. medRxiv preprint.
 #'   \url{https://doi.org/10.1101/2020.03.03.20028423}
 "bi"
+
+
+#' Samples of the posterior distribution of age-specific outcome probabilities
+#' based on data from Schenzhen, China
+#'
+#' @format A data frame with 96,000 rows and 4 variables:
+#' \describe{
+#'   \item{age_group}{age group, in 10-year intervals}
+#'   \item{p}{sample from posterior probability distribution}
+#'   \item{outcome}{outcome type}
+#'   \item{model}{model used}
+#' }
+#'
+"shenzhen_samples"

@@ -2,13 +2,20 @@
 % Please edit documentation in R/fetch_data.R
 \name{get_posterior_shenzhen}
 \alias{get_posterior_shenzhen}
-\title{Get posterior samples of prob(outcome | age) for Shenzhen}
+\title{Get posterior samples of Pr(outcome|age_group) based on data from Shenzhen,
+China in Bi et al. (2020)}
 \usage{
-get_posterior_shenzhen(outcome = c("severe", "moderate", "mild"))
+get_posterior_shenzhen(
+  outcome = c("severe", "moderate", "mild"),
+  model = c("Update", "JHU Original")
+)
 }
 \arguments{
-\item{outcome}{Outcome severity ("severe", "moderate", or "mild")}
+\item{outcome}{Outcome category ("severe", "moderate", or "mild")}
+
+\item{model}{Model to use ("Update" or "JHU Original")}
 }
 \description{
-Get posterior samples of prob(outcome | age) for Shenzhen
+Get posterior samples of Pr(outcome|age_group) based on data from Shenzhen,
+China in Bi et al. (2020)
 }

@@ -19,14 +19,35 @@ get_pop_data <- function() {
 }
 
 
-#' Get posterior samples of prob(outcome | age) for Shenzhen
+#' Get posterior samples of Pr(outcome|age_group) based on data from Shenzhen,
+#' China in Bi et al. (2020)
 #'
-#' @param outcome Outcome severity ("severe", "moderate", or "mild")
+#' @param outcome Outcome category ("severe", "moderate", or "mild")
+#' @param model Model to use ("Update" or "JHU Original")
 #'
 #' @export get_posterior_shenzhen
-get_posterior_shenzhen <- function(outcome = c("severe", "moderate", "mild")) {
+get_posterior_shenzhen <- function(outcome = c("severe", "moderate", "mild"),
+                                   model = c("Update", "JHU Original")) {
+
   outcome <- match.arg(outcome)
-  fetch_data(paste0("shenzhen_prob_", outcome))
+  model <- match.arg(model)
+
+  # for testing purposes only
+  if (FALSE) {
+    outcome <- "severe"; model <- "Update"
+  }
+
+  # fetch data and subset to given outcome and type
+  d <- fetch_data("shenzhen_samples")
+  d <- d[d$outcome == outcome & d$model == model,]
+
+  # split by age group
+  dsplit <- split(d, d$age_group)
+
+  # extract posterior samples for each age group and bind into data.frame
+  out <- as.data.frame(sapply(dsplit, function(x) x$p))
+
+  return(out)
 }
 
 

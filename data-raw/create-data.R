@@ -53,19 +53,48 @@ wpp_pop <- file.path("data-raw/pop-age-distrib/WPP2019_POP_F07_1_POPULATION_BY_A
 # each col contains samples for an age category
 ## saved output from get_severe_age_shenzhen()
 
-shenzhen_prob_mild <- get_severe_age_Shenzhen("mild")
-shenzhen_prob_moderate <- get_severe_age_Shenzhen("moderate")
-shenzhen_prob_severe <- get_severe_age_Shenzhen("severe")
-
-outcome <- c("mild", "moderate", "severe")
-file <- paste0("data-raw/severity/shenzhen_", outcome, "_age_prob.csv")
-
-shenzhen_prob_mild_orig <- readr::read_csv(file[1]) %>% as.data.frame()
-shenzhen_prob_moderate_orig <- readr::read_csv(file[2]) %>% as.data.frame()
-shenzhen_prob_severe_orig <- readr::read_csv(file[3]) %>% as.data.frame()
 
 age_cat <- c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70+")
-names(shenzhen_prob_mild_orig) <- names(shenzhen_prob_moderate_orig) <- names(shenzhen_prob_severe_orig) <- age_cat
+
+
+
+shenzhen_update <- bind_rows(
+  get_severe_age_Shenzhen("mild") %>%
+    tidyr::gather("age_group", "p") %>%
+    mutate(outcome = "mild"),
+  get_severe_age_Shenzhen("moderate") %>%
+    tidyr::gather("age_group", "p") %>%
+    mutate(outcome = "moderate"),
+  get_severe_age_Shenzhen("severe") %>%
+    tidyr::gather("age_group", "p") %>%
+    mutate(outcome = "severe")
+) %>%
+  mutate(model = "Update")
+
+shenzhen_orig <- bind_rows(
+  read.csv("data-raw/severity/shenzhen_mild_age_prob.csv") %>%
+    setNames(age_cat) %>%
+    tidyr::gather("age_group", "p") %>%
+    mutate(outcome = "mild"),
+  read.csv("data-raw/severity/shenzhen_moderate_age_prob.csv") %>%
+    setNames(age_cat) %>%
+    tidyr::gather("age_group", "p") %>%
+    mutate(outcome = "moderate"),
+  read.csv("data-raw/severity/shenzhen_severe_age_prob.csv") %>%
+    setNames(age_cat) %>%
+    tidyr::gather("age_group", "p") %>%
+    mutate(outcome = "severe")
+) %>%
+  mutate(model = "JHU Original") %>%
+  group_by(age_group, outcome) %>%
+  slice(sample(1:n(), 2000)) %>%
+  ungroup() %>%
+  as.data.frame()
+
+shenzhen_samples <- bind_rows(
+  shenzhen_orig,
+  shenzhen_update
+)
 
 
 ## Davies et al. 2020, preprint
@@ -114,27 +143,21 @@ neher <- readr::read_csv("data-raw/severity/age_specific_params_Neher.csv") %>%
 
 ## Bi et al. 2020, preprint
 # https://doi.org/10.1101/2020.03.03.20028423
-bi <- tibble::tibble(
-  age_group = c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70+"),
-  mild = c(7,3,13,22,15,21,17,4),
-  moderate = c(13,9,21,64,40,46,49,12),
-  severe = c(0,0,0,1,5,7,20,2),
-  fever_no = c(6,3,3,13,6,10,16,4),
-  fever_yes = c(14,9,31,74,54,64,70,14)
+bi <- data.frame(
+  age_group = c("0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70+"),
+  mild = c(7, 3, 13, 22, 15, 21, 17, 4),
+  moderate = c(13, 9, 21, 64, 40, 46, 49, 12),
+  severe = c(0, 0, 0, 1, 5, 7, 20, 2),
+  fever_no = c(6, 3, 3, 13, 6, 10, 16, 4),
+  fever_yes = c(14, 9, 31, 74, 54, 64, 70, 14),
+  stringsAsFactors = FALSE
 ) %>%
-  mutate(total = fever_no + fever_yes) %>%
-  as.data.frame()
-
+  mutate(total = fever_no + fever_yes)
 
 
 ## write
 usethis::use_data(wpp_pop,
-                  shenzhen_prob_mild,
-                  shenzhen_prob_moderate,
-                  shenzhen_prob_severe,
-                  shenzhen_prob_mild_orig,
-                  shenzhen_prob_moderate_orig,
-                  shenzhen_prob_severe_orig,
+                  shenzhen_samples,
                   neher,
                   davies,
                   salje,
