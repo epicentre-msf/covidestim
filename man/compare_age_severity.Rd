@@ -14,11 +14,11 @@ compare_age_severity(jhu_model = c("Update", "JHU Original"))
 \value{
 A data.frame with age-specific estimates of Pr(hospitalization|infection)
 (mean and 95% CI) based on methods by four different research groups (JHU,
-Neher lab, Pasteur Institute, and LHSTM)
+Neher lab, Pasteur Institute, and LSHTM)
 }
 \description{
 Compile age-specific estimates of Pr(hospitalizion|infection) based on
-methods from four different research groups (JHU, Neher, Pasteur, and LHSTM).
+methods from four different research groups (JHU, Neher, Pasteur, and LSHTM).
 }
 \examples{
 compare_age_severity()

@@ -3,7 +3,7 @@
 #'
 #' @description
 #' Compile age-specific estimates of Pr(hospitalizion|infection) based on
-#' methods from four different research groups (JHU, Neher, Pasteur, and LHSTM).
+#' methods from four different research groups (JHU, Neher, Pasteur, and LSHTM).
 #'
 #' @param jhu_model Which JHU model to use to derive posterior probabilities
 #'   ("Update" or "JHU Original")
@@ -11,7 +11,7 @@
 #' @return
 #' A data.frame with age-specific estimates of Pr(hospitalization|infection)
 #' (mean and 95% CI) based on methods by four different research groups (JHU,
-#' Neher lab, Pasteur Institute, and LHSTM)
+#' Neher lab, Pasteur Institute, and LSHTM)
 #'
 #' @author Patrick Barks <patrick.barks@@epicentre.msf.org>
 #'
@@ -60,18 +60,18 @@ compare_age_severity <- function(jhu_model = c("Update", "JHU Original")) {
   pasteur_out$age_group[1] <- "0-9"
   pasteur_out$age_group[2] <- "10-19"
 
-  # LHSTM
+  # lshtm
   est_vanzan <- get_est_vanzandvoort()
   davies <- get_est_davies()
   davies_split <- split(davies, davies$stat)
 
-  lhstm_out <- data.frame(age_group = davies_split[[1]]$age_group,
+  lshtm_out <- data.frame(age_group = davies_split[[1]]$age_group,
                           mean = davies_split$mean$p_clin_inf * est_vanzan$p_hosp_clin,
                           low95 = davies_split$low_95$p_clin_inf * est_vanzan$p_hosp_clin,
                           upp95 = davies_split$up_95$p_clin_inf * est_vanzan$p_hosp_clin,
-                          group = "LHSTM",
+                          group = "LSHTM",
                           stringsAsFactors = FALSE)
 
-  return(rbind(jhu_out, neher_out, pasteur_out, lhstm_out))
+  return(rbind(jhu_out, neher_out, pasteur_out, lshtm_out))
 }
 
