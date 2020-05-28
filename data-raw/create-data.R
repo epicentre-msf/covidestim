@@ -20,43 +20,41 @@ wpp_pop <- file.path("data-raw/pop-age-distrib/WPP2019_POP_F07_1_POPULATION_BY_A
   readxl::read_xlsx(skip = 16) %>%
   filter(Type != "Label/Separator") %>%
   mutate_at(vars(9:29), as.numeric) %>%
-  mutate(`0-9` = `0-4` + `5-9`,
-         `10-19` = `10-14` + `15-19`,
-         `20-29` = `20-24` + `25-29`,
-         `30-39` = `30-34` + `35-39`,
-         `40-49` = `40-44` + `45-49`,
-         `50-59` = `50-54` + `55-59`,
-         `60-69` = `60-64` + `65-69`,
-         `70-79` = `70-74` + `75-79`,
-         `80-89` = `80-84` + `85-89`,
-         `90-99` = `90-94` + `95-99`,
-         `100-109` = `100+`) %>%
   select(location = `Region, subregion, country or area *`,
          LocID = `Country code`,
          year = `Reference date (as of 1 July)`,
-         `0-9`,
-         `10-19`,
-         `20-29`,
-         `30-39`,
-         `40-49`,
-         `50-59`,
-         `60-69`,
-         `70-79`,
-         `80-89`,
-         `90-99`,
-         `100-109`) %>%
+         `0-4`,
+         `5-9`,
+         `10-14`,
+         `15-19`,
+         `20-24`,
+         `25-29`,
+         `30-34`,
+         `35-39`,
+         `40-44`,
+         `45-49`,
+         `50-54`,
+         `55-59`,
+         `60-64`,
+         `65-69`,
+         `70-74`,
+         `75-79`,
+         `80-84`,
+         `85-89`,
+         `90-94`,
+         `95-99`,
+         `100+`) %>%
   left_join(wpp_loc, by = "LocID") %>%
   select(-parent_LocID) %>%
+  tidyr::gather("age_group", "pop", `0-4`:`100+`) %>%
+  select(location, LocID, iso_a3, name, year, age_group, pop) %>%
   as.data.frame()
+
 
 
 # each col contains samples for an age category
 ## saved output from get_severe_age_shenzhen()
-
-
 age_cat <- c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70+")
-
-
 
 shenzhen_update <- bind_rows(
   get_severe_age_Shenzhen("mild") %>%
@@ -155,6 +153,18 @@ bi <- data.frame(
   mutate(total = fever_no + fever_yes)
 
 
+## Model by MRC Centre for Global Infectious Disease Analysis, Imperial College
+# https://mrc-ide.github.io/global-lmic-reports/parameters.html
+imperial <- readr::read_csv("data-raw/severity/age_specific_params_Imperial.csv") %>%
+  mutate(age_group = gsub(" to ", "-", age_group)) %>%
+  mutate(p_dead_icu = 0.5) %>%
+  mutate(p_icu_inf = (p_hosp_inf * p_icu_hosp),
+         p_dead_inf = (p_icu_inf * p_dead_icu) + ((1 - p_icu_inf) * p_dead_nonicu)) %>%
+  select(age_group, p_hosp_inf, p_icu_hosp, p_dead_icu, p_dead_nonicu, p_icu_inf, p_dead_inf) %>%
+  as.data.frame()
+
+
+
 ## write
 usethis::use_data(wpp_pop,
                   shenzhen_samples,
@@ -163,6 +173,7 @@ usethis::use_data(wpp_pop,
                   salje,
                   vanzandvoort,
                   bi,
+                  imperial,
                   overwrite = TRUE)
 
 

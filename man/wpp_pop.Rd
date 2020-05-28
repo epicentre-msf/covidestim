@@ -10,20 +10,11 @@ A data frame with 3765 rows and 16 variables:
 \describe{
   \item{location}{country or region}
   \item{LocID}{location ID}
-  \item{year}{year of populationestimates}
-  \item{0-9}{population estimate for age group 0-9 years}
-  \item{10-19}{population estimate for age group 10-19 years}
-  \item{20-29}{population estimate for age group 20-29 years}
-  \item{30-39}{population estimate for age group 30-39 years}
-  \item{40-49}{population estimate for age group 40-49 years}
-  \item{50-59}{population estimate for age group 50-59 years}
-  \item{60-69}{population estimate for age group 60-69 years}
-  \item{70-79}{population estimate for age group 70-79 years}
-  \item{80-89}{population estimate for age group 80-89 years}
-  \item{90-99}{population estimate for age group 90-99 years}
-  \item{100-109}{population estimate for age group 100-109 years}
-  \item{name}{location name}
   \item{iso_a3}{location ISO A3 code}
+  \item{name}{location name}
+  \item{year}{year of populationestimates}
+  \item{age_group}{age group, in 5-years intervals (0-4, 5-9, ..., 100+)}
+  \item{pop}{population size estimate}
 }
 }
 \source{

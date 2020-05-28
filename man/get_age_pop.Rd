@@ -8,7 +8,7 @@ World Population Prospects 2019}
 \url{https://population.un.org/wpp/Download/Standard/Population/}
 }
 \usage{
-get_age_pop(iso, format = c("wide", "long"))
+get_age_pop(iso, format = c("wide", "long"), interval = c("10yr", "5yr"))
 }
 \arguments{
 \item{iso}{ISO3 code for country of interest}
@@ -17,6 +17,11 @@ get_age_pop(iso, format = c("wide", "long"))
 single-row data.frame with age classes as column names, whereas "long"
 yields a 2-column data.frame with the first defining age classes and the
 second giving corresponding population sizes. Defaults to "wide".}
+
+\item{interval}{Age interval ("5yr" or "10yr"). The WPP data is originally in
+5-year age intervals, but by default we aggregate to 10-year intervals to
+match the intervals at which covid severity estimates are usually
+available.}
 }
 \value{
 A data.frame. If \code{format = "wide"} returns a single-row data.frame with
@@ -30,6 +35,6 @@ from the UN World Population Prospects 2019 (WPP2019).
 }
 \examples{
 get_age_pop(iso = "FRA")
-get_age_pop(iso = "FRA", format = "long")
+get_age_pop(iso = "FRA", format = "long", interval = "5yr")
 
 }

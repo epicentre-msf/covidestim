@@ -96,3 +96,11 @@ get_est_neher <- function() {
   fetch_data("neher")
 }
 
+
+#' Get estimates from Imperial
+#'
+#' @export get_est_imperial
+get_est_imperial <- function() {
+  fetch_data("imperial")
+}
+
