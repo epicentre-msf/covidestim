@@ -53,6 +53,7 @@ get_p_Salje <- function(x,
 
   p_type <- match.arg(p_type)
   p_stat <- match.arg(p_stat)
+  p_sex <- match.arg(p_sex)
 
   # for testing purposes only
   if (FALSE) {

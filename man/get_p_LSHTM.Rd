@@ -17,11 +17,9 @@ control of COVID-19 epidemics. medRxiv preprint.
 \url{https://doi.org/10.1101/2020.03.24.20043018}
 }
 \usage{
-get_p_LSHTM(
-  x,
-  p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp", "p_dead_inf"),
-  p_stat = c("mean", "median", "low_95", "up_95", "low_50", "up_50")
-)
+get_p_LSHTM(x, p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp",
+  "p_dead_inf"), p_stat = c("mean", "median", "low_95", "up_95",
+  "low_50", "up_50"))
 }
 \arguments{
 \item{x}{Either an ISO3 country code used to extract age-specific population

@@ -13,12 +13,8 @@ of 391 cases and 1,286 of their close contacts. medRxiv preprint.
 \url{https://doi.org/10.1101/2020.03.03.20028423}
 }
 \usage{
-get_p_severe_JHU(
-  x,
-  outcome = c("severe", "moderate", "mild"),
-  model = c("Update", "JHU Original"),
-  return_draws = FALSE
-)
+get_p_severe_JHU(x, outcome = c("severe", "moderate", "mild"),
+  model = c("Update", "JHU Original"), return_draws = FALSE)
 }
 \arguments{
 \item{x}{Either an ISO3 country code used to extract age-specific population

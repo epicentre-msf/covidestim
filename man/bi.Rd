@@ -4,8 +4,7 @@
 \name{bi}
 \alias{bi}
 \title{Age-specific severity counts from Bi et al. 2020}
-\format{
-A data frame with 8 rows and 7 variables:
+\format{A data frame with 8 rows and 7 variables:
 \describe{
   \item{age_group}{age group, in 10-year intervals}
   \item{mild}{number of mild cases}
@@ -14,8 +13,7 @@ A data frame with 8 rows and 7 variables:
   \item{fever_no}{number of cases with no fever}
   \item{fever_yes}{number of cases with fever}
   \item{total}{total number of cases}
-}
-}
+}}
 \source{
 Bi, Q., Wu, Y., ..., and Feng, .T. (2020) Epidemiology and
   Transmission of COVID-19 in Shenzhen China: Analysis of 391 cases and 1,286

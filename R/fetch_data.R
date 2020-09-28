@@ -75,6 +75,23 @@ get_est_salje <- function(sex = NULL, stat = NULL) {
 }
 
 
+#' Get estimates from O'Driscoll
+#'
+#' @param sex Optional sex to subset to (either "female", "male", or "total").
+#'   Defaults to `NULL`, in which case all categories are returned.
+#' @param stat Optional statistic to subset to (either "mean", "low_95", or
+#'   "up_95"). Defaults to `NULL`, in which case all cagegories are returned.
+#'
+#' @export get_est_odriscoll
+get_est_odriscoll <- function(sex = NULL, stat = NULL) {
+  dat <- fetch_data("odriscoll")
+  if (!is.null(sex)) dat <- dat[dat$sex == sex,]
+  if (!is.null(stat)) dat <- dat[dat$stat == stat,]
+  return(dat)
+}
+
+
+
 #' Get estimates from Davies
 #'
 #' @param stat Optional statistic to subset to (either "mean", "median",

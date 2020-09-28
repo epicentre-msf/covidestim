@@ -4,8 +4,7 @@
 \name{neher}
 \alias{neher}
 \title{Age-specific severity estimates from Neher lab}
-\format{
-A data frame with 9 rows and 9 variables:
+\format{A data frame with 9 rows and 9 variables:
 \describe{
   \item{age_group}{age group, in 10-year intervals}
   \item{confirmed}{probability confirmed given infection}
@@ -16,8 +15,7 @@ A data frame with 9 rows and 9 variables:
   \item{p_hosp_inf}{probability of hospitalization given infection}
   \item{p_dead_hosp}{probability of dying given hospitalization}
   \item{p_dead_inf}{probability of dying given infection}
-}
-}
+}}
 \source{
 \url{https://covid19-scenarios.org/}
 }

@@ -164,6 +164,37 @@ imperial <- readr::read_csv("data-raw/severity/age_specific_params_Imperial.csv"
   as.data.frame()
 
 
+## Data from O'Driscoll et al. 2020, preprint
+# https://www.medrxiv.org/content/10.1101/2020.08.24.20180851v1
+odriscoll <- readr::read_csv("data-raw/severity/odriscoll_table_s4.tsv") %>%
+  mutate(age_group = paste0(age_l, "-", age_u)) %>%
+  mutate(age_group = if_else(age_group == "80-999", "80+", age_group)) %>%
+  select(-age_u, -age_l) %>%
+  tidyr::pivot_longer(-age_group, values_to = "p_dead_inf") %>%
+  mutate(
+    stat = case_when(
+      grepl("_m", name) ~ "mean",
+      grepl("_u", name) ~ "up_95",
+      grepl("_l", name) ~ "low_95",
+      TRUE ~ NA_character_
+    ),
+    sex = case_when(
+      grepl("female", name) ~ "female",
+      grepl("male", name) ~ "male",
+      grepl("both", name) ~ "total",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  select(-name) %>%
+  mutate(quantile = case_when(
+    stat == "low_95" ~ .025,
+    stat == "up_95" ~ .975,
+    stat == "mean" ~ 0.5
+  )) %>%
+  mutate(p_dead_inf = p_dead_inf/100) %>% #percent!
+  as.data.frame()
+
+
 
 ## write
 usethis::use_data(wpp_pop,
@@ -174,6 +205,7 @@ usethis::use_data(wpp_pop,
                   vanzandvoort,
                   bi,
                   imperial,
+                  odriscoll,
                   overwrite = TRUE)
 
 

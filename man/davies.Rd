@@ -4,15 +4,13 @@
 \name{davies}
 \alias{davies}
 \title{Age-specific clinical fraction estimates from Davies et al. 2020}
-\format{
-A data frame with 48 rows and 4 variables:
+\format{A data frame with 48 rows and 4 variables:
 \describe{
   \item{age_group}{age group, in 10-year intervals}
   \item{stat}{statistic, "mean", "median", "low_50", "upp_50", "low_95", or "upp_95"}
   \item{quantile}{quantile corresponding to the relevant statistic}
   \item{p_clin_inf}{probability clinical given infection}
-}
-}
+}}
 \source{
 Davies, N.G., Klepac, P., Liu, Y., Prem, K., Jit, M., CMMID COVID-19
   Working Group, and Eggo, R.M. (2020) Age-dependent effects in the

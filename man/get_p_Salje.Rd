@@ -11,12 +11,9 @@ J., Andronico, A., Hoze, N., Richet, J., Dubost, C.L., and Le Strat, Y.
 \url{https://doi.org/10.1126/science.abc3517}
 }
 \usage{
-get_p_Salje(
-  x,
-  p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp", "p_dead_inf"),
-  p_stat = c("mean", "low_95", "up_95"),
-  p_sex = c("total", "male", "female")
-)
+get_p_Salje(x, p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_hosp",
+  "p_dead_inf"), p_stat = c("mean", "low_95", "up_95"),
+  p_sex = c("total", "male", "female"))
 }
 \arguments{
 \item{x}{Either an ISO3 country code used to extract age-specific population

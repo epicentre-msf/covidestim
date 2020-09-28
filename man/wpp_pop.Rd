@@ -5,8 +5,7 @@
 \alias{wpp_pop}
 \title{Population estimates by country/region and 10-year age interval, derived from
 the UN World Population Prospects 2019}
-\format{
-A data frame with 3765 rows and 16 variables:
+\format{A data frame with 3765 rows and 16 variables:
 \describe{
   \item{location}{country or region}
   \item{LocID}{location ID}
@@ -15,8 +14,7 @@ A data frame with 3765 rows and 16 variables:
   \item{year}{year of populationestimates}
   \item{age_group}{age group, in 5-years intervals (0-4, 5-9, ..., 100+)}
   \item{pop}{population size estimate}
-}
-}
+}}
 \source{
 \url{https://population.un.org/wpp/Download/Standard/Population/}
 }

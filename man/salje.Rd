@@ -4,8 +4,7 @@
 \name{salje}
 \alias{salje}
 \title{Age-specific severity estimates from Salje et al. 2020}
-\format{
-A data frame with 96 rows and 5 variables:
+\format{A data frame with 96 rows and 5 variables:
 \describe{
   \item{age_group}{age group, in 10-year intervals except for first group 0-19}
   \item{sex}{sex ("male", "female", or "total")}
@@ -15,8 +14,7 @@ A data frame with 96 rows and 5 variables:
   \item{p_icu_hosp}{probability of ICU given hospitalization}
   \item{p_dead_hosp}{probability death given hospitalization}
   \item{p_dead_inf}{probability of death given infection}
-}
-}
+}}
 \source{
 Salje, H., Kiem, C.T., Lefrancq, N., Courtejoie, N., Bosetti, P.,
   Paireau, J., Andronico, A., Hoze, N., Richet, J., Dubost, C.L., and Le

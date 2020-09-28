@@ -8,10 +8,8 @@ distribution, and age-severity estimates from MRC-IDE at Imperial College}
 \url{https://mrc-ide.github.io/global-lmic-reports/parameters.html}
 }
 \usage{
-get_p_Imperial(
-  x,
-  p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_icu", "p_dead_nonicu", "p_dead_inf")
-)
+get_p_Imperial(x, p_type = c("p_hosp_inf", "p_icu_hosp", "p_dead_icu",
+  "p_dead_nonicu", "p_dead_inf"))
 }
 \arguments{
 \item{x}{Either an ISO3 country code used to extract age-specific population

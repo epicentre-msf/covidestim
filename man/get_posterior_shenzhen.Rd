@@ -5,10 +5,8 @@
 \title{Get posterior samples of Pr(outcome|age_group) based on data from Shenzhen,
 China in Bi et al. (2020)}
 \usage{
-get_posterior_shenzhen(
-  outcome = c("severe", "moderate", "mild"),
-  model = c("Update", "JHU Original")
-)
+get_posterior_shenzhen(outcome = c("severe", "moderate", "mild"),
+  model = c("Update", "JHU Original"))
 }
 \arguments{
 \item{outcome}{Outcome category ("severe", "moderate", or "mild")}

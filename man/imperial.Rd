@@ -4,8 +4,7 @@
 \name{imperial}
 \alias{imperial}
 \title{Age-specific severity estimates from Imperial}
-\format{
-A data frame with 17 rows and 7 variables:
+\format{A data frame with 17 rows and 7 variables:
 \describe{
   \item{age_group}{age group, in 5-year intervals}
   \item{p_hosp_inf}{probability of hospitalization given infection}
@@ -14,8 +13,7 @@ A data frame with 17 rows and 7 variables:
   \item{p_dead_nonicu}{probability of dying given non-ICU}
   \item{p_icu_inf}{probability of ICU given infection}
   \item{p_dead_inf}{probability of dying given infection}
-}
-}
+}}
 \source{
 \url{https://mrc-ide.github.io/global-lmic-reports/parameters.html}
 }

@@ -8,7 +8,8 @@ World Population Prospects 2019}
 \url{https://population.un.org/wpp/Download/Standard/Population/}
 }
 \usage{
-get_age_pop(iso, format = c("wide", "long"), interval = c("10yr", "5yr"))
+get_age_pop(iso, format = c("wide", "long"), interval = c("10yr",
+  "5yr"))
 }
 \arguments{
 \item{iso}{ISO3 code for country of interest}

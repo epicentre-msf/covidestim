@@ -4,15 +4,13 @@
 \name{vanzandvoort}
 \alias{vanzandvoort}
 \title{Age-specific severity estimates from van Zandvoort et al. 2020}
-\format{
-A data frame with 96 rows and 5 variables:
+\format{A data frame with 96 rows and 5 variables:
 \describe{
   \item{age_group}{age group, in 10-year intervals}
   \item{p_hosp_clin}{probability of hospitalization given clinical}
   \item{p_icu_hosp}{probability of ICU given hospitalization}
   \item{p_dead_hosp}{probability of dying given hospitalization}
-}
-}
+}}
 \source{
 van Zandvoort, K., Jarvis, C.I., Pearson, C., Davies, N.G., CMMID
   COVID-19 Working Group, Russell, T.W., Kucharski, A.J., Jit, M.J., Flasche,
