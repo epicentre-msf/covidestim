@@ -9,6 +9,8 @@
 #'
 #' @param countries A vector of ISO3 country codes used to extract age-specific population
 #'   estimates from the UN World Population Prospects 2019 dataset.
+#' @param p_sex Use severity estimate for which sex (either "female", "male", or
+#'   "total")
 #'
 #' @return
 #' A data.frame with IFR estimates (mean and 95% CI) for different countries
@@ -19,7 +21,10 @@
 #' compare_IFR(countries = c("AFG", "PAK", "IRN"))
 #'
 #' @export compare_IFR
-compare_IFR <- function(countries = c("AFG", "PAK", "IRN")) {
+compare_IFR <- function(countries = c("AFG", "PAK", "IRN"),
+                        p_sex = c("total", "male", "female")) {
+
+    p_sex <- match.arg(p_sex)
 
     ifr_df <- data.frame(
         iso = NULL,
@@ -29,9 +34,9 @@ compare_IFR <- function(countries = c("AFG", "PAK", "IRN")) {
     )
 
     for (cnt in countries) {
-        up <- get_p_ODriscoll(x = cnt, p_stat = "up_95", p_sex = "total")
-        mn <- get_p_ODriscoll(x = cnt, p_stat = "mean", p_sex = "total")
-        low <- get_p_ODriscoll(x = cnt, p_stat = "low_95", p_sex = "total")
+        up <- get_p_ODriscoll(x = cnt, p_stat = "up_95", p_sex = p_sex)
+        mn <- get_p_ODriscoll(x = cnt, p_stat = "mean", p_sex = p_sex)
+        low <- get_p_ODriscoll(x = cnt, p_stat = "low_95", p_sex = p_sex)
 
         ifr_df <- rbind(
             ifr_df,
