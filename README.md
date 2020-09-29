@@ -28,6 +28,7 @@ dataset, and age-severity estimates from:
     and [van Zandvoort et
     al. 2020](https://doi.org/10.1101/2020.04.27.20081711) (China,
     Diamond Princess)
+  - [O'Driscoll et al. 2020](https://doi.org/10.1101/2020.08.24.20180851) ensemble IFR (Infection Fatality Risk) estimates based on data from 45 countries.
 
 ## Installation
 
@@ -71,6 +72,8 @@ covidestim::get_p_Neher("AFG", p_type = "p_dead_inf")
 #> [1] 0.001087
 covidestim::get_p_LSHTM("AFG", p_type = "p_dead_inf")
 #> [1] 0.006092
+covidestim::get_p_ODriscoll("AFG", p_type = "p_dead_inf")
+#> [1] 0.0006973
 ```
 
 #### Compare estimates of Pr(hospitalization|infection) from various research groups
