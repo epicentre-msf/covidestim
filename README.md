@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 An R package for estimating population-level covid19 outcome
-probabilities ( e.g. hospitalization|infection, death|hospitalization,
+probabilities (e.g. hospitalization|infection, death|hospitalization,
 etc.), given the age-distribution of a population of interest and
 severity estimates (by age, sex, etc.) from various research groups.
 
@@ -28,7 +28,9 @@ dataset, and age-severity estimates from:
     and [van Zandvoort et
     al. 2020](https://doi.org/10.1101/2020.04.27.20081711) (China,
     Diamond Princess)
-  - [O'Driscoll et al. 2020](https://doi.org/10.1101/2020.08.24.20180851) ensemble IFR (Infection Fatality Risk) estimates based on data from 45 countries.
+  - [O’Driscoll et
+    al. 2020](https://doi.org/10.1101/2020.08.24.20180851) ensemble IFR
+    (Infection Fatality Risk) estimates based on data from 45 countries.
 
 ## Installation
 
@@ -58,7 +60,7 @@ covidestim::get_age_pop(iso = "AFG", format = "long") # AFG = Afghanistan
 #> 8      70-79   480.455
 #> 9      80-89   100.065
 #> 10     90-99     5.821
-#> 11   100-109     0.039
+#> 11      100+     0.039
 ```
 
 #### Derive population-wide covid19 outcome probability estimates
@@ -72,8 +74,6 @@ covidestim::get_p_Neher("AFG", p_type = "p_dead_inf")
 #> [1] 0.001087
 covidestim::get_p_LSHTM("AFG", p_type = "p_dead_inf")
 #> [1] 0.006092
-covidestim::get_p_ODriscoll("AFG", p_type = "p_dead_inf")
-#> [1] 0.0006973
 ```
 
 #### Compare estimates of Pr(hospitalization|infection) from various research groups
@@ -91,3 +91,56 @@ ggplot(p_hosp, aes(x = age_group, y = mean, color = group)) +
 ```
 
 ![](man/figures/unnamed-chunk-5-1.png)<!-- -->
+
+#### Compare Infection Fatality Risk (IFR) of different countries
+
+Get age-adjusted IFR estimates for countries according to ensemble
+estimates by [O’Driscoll et
+al. 2020](https://doi.org/10.1101/2020.08.24.20180851).
+
+``` r
+#get list of all countries with available population
+pop <- get_pop_data()
+cntrys <- pop$iso_a3
+cntrys <- unique(cntrys)
+cntrys <- cntrys[!is.na(cntrys)]
+
+#compute IFRs, sort ascending, add continent
+ifr <- compare_IFR(cntrys)
+ifr$iso <- factor(ifr$iso, levels = ifr$iso[order(ifr$mn)])
+ifr$continent <- countrycode::countrycode(ifr$iso, "iso3c", "continent")
+
+#plot
+ggplot(ifr[ifr$continent %in% c("Africa", "Asia"),]) +
+  geom_point(aes(x = iso, y = 100*mn)) +
+  geom_linerange(aes(x = iso, ymin = 100*low, ymax = 100*up)) +
+  scale_y_log10(limits = c(0.05, 1)) +
+  scale_x_discrete(guide = guide_axis(angle = 90, n.dodge = 2)) +
+  labs(
+    x = "Country",
+    y = "IFR estimate (%)"
+  ) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  facet_grid(cols = vars(continent), drop = T, scales = "free_x", space = "free_x")
+```
+
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
+
+ggplot(ifr[ifr$continent %in% c("Americas", "Europe", "Oceania"),]) +
+  geom_point(aes(x = iso, y = 100*mn)) +
+  geom_linerange(aes(x = iso, ymin = 100*low, ymax = 100*up)) +
+  scale_y_log10(limits = c(0.05, 1)) +
+  scale_x_discrete(guide = guide_axis(angle = 90, n.dodge = 2)) +
+  labs(
+    x = "Country",
+    y = "IFR estimate (%)"
+  ) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  facet_grid(cols = vars(continent), drop = T, scales = "free_x", space = "free_x")
+```
+
+![](man/figures/unnamed-chunk-6-2.png)<!-- -->

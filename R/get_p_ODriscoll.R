@@ -38,6 +38,17 @@
 #' # distribution from WPP2019
 #' get_p_ODriscoll(x = "CAN", p_stat = "mean", p_sex = "total")
 #'
+#' # use custom age-distribution
+#' age_df <- data.frame(
+#'   age = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
+#'              "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80+"),
+#'   pop = c(1023, 1720, 2422, 3456, 3866, 4104, 4003, 3576, 1210, 1023,
+#'            1720, 2422, 3456, 3866, 4104, 4003, 3576),
+#'   stringsAsFactors = FALSE
+#' )
+#'
+#' get_p_ODriscoll(x = age_df, p_type = "p_dead_inf", p_stat = "mean", p_sex = "total")
+#'
 #' @export get_p_ODriscoll
 get_p_ODriscoll <- function(x,
                         p_type = c("p_dead_inf"),
