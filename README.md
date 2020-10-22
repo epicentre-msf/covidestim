@@ -29,10 +29,13 @@ dataset, and age-severity estimates from:
     al. 2020](https://doi.org/10.1101/2020.04.27.20081711) (China,
     Diamond Princess)
   - [O’Driscoll et
-    al. 2020](https://doi.org/10.1101/2020.08.24.20180851) ensemble IFR
-    (Infection Fatality Risk) estimates based on data from 45 countries
-  - [Levin et al. 2020](https://doi.org/10.1101/2020.07.23.20160895)
-    meta regression IFR estimates based on data from 34 studies.
+    al. 2020](https://www.medrxiv.org/content/10.1101/2020.08.24.20180851v1)
+    ensemble IFR (Infection Fatality Risk) estimates based on data from
+    45 countries (published on 26 August 2020)
+  - [Levin et
+    al. 2020](https://www.medrxiv.org/content/10.1101/2020.07.23.20160895v6)
+    meta regression IFR estimates based on data from 34 studies
+    (published on 8 October 2020).
 
 ## Installation
 
