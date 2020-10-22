@@ -91,6 +91,18 @@ get_est_odriscoll <- function(sex = NULL, stat = NULL) {
 }
 
 
+#' Get estimates from Levin
+#'
+#' @param stat Optional statistic to subset to (either "mean", "low_95", or
+#'   "up_95"). Defaults to `NULL`, in which case all cagegories are returned.
+#'
+#' @export get_est_levin
+get_est_levin <- function(stat = NULL) {
+  dat <- fetch_data("levin")
+  if (!is.null(stat)) dat <- dat[dat$stat == stat,]
+  return(dat)
+}
+
 
 #' Get estimates from Davies
 #'

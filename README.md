@@ -30,7 +30,9 @@ dataset, and age-severity estimates from:
     Diamond Princess)
   - [O’Driscoll et
     al. 2020](https://doi.org/10.1101/2020.08.24.20180851) ensemble IFR
-    (Infection Fatality Risk) estimates based on data from 45 countries.
+    (Infection Fatality Risk) estimates based on data from 45 countries
+  - [Levin et al. 2020](https://doi.org/10.1101/2020.07.23.20160895)
+    meta regression IFR estimates based on data from 34 studies.
 
 ## Installation
 
@@ -94,53 +96,70 @@ ggplot(p_hosp, aes(x = age_group, y = mean, color = group)) +
 
 #### Compare Infection Fatality Risk (IFR) of different countries
 
-Get age-adjusted IFR estimates for countries according to ensemble
-estimates by [O’Driscoll et
-al. 2020](https://doi.org/10.1101/2020.08.24.20180851).
+Get age-adjusted IFR estimates for countries according to an ensemble
+estimate by [O’Driscoll et
+al. 2020](https://doi.org/10.1101/2020.08.24.20180851) and compare them
+to the results of a metaregression by [Levin et
+al. 2020](https://doi.org/10.1101/2020.07.23.20160895).
 
 ``` r
 #get list of all countries with available population
-pop <- get_pop_data()
-cntrys <- pop$iso_a3
-cntrys <- unique(cntrys)
-cntrys <- cntrys[!is.na(cntrys)]
+cntrys <- c("AFG", "SSD", "COD", "CHN", "USA", "FRA", "CHE", "JPN", "PER")
 
 #compute IFRs, sort ascending, add continent
 ifr <- compare_IFR(cntrys)
-ifr$iso <- factor(ifr$iso, levels = ifr$iso[order(ifr$mn)])
-ifr$continent <- countrycode::countrycode(ifr$iso, "iso3c", "continent")
+ifr$iso <- factor(ifr$iso, levels = unique(ifr$iso[order(ifr$mn)]))
 
 #plot
-ggplot(ifr[ifr$continent %in% c("Africa", "Asia"),]) +
-  geom_point(aes(x = iso, y = 100*mn)) +
-  geom_linerange(aes(x = iso, ymin = 100*low, ymax = 100*up)) +
-  scale_y_log10(limits = c(0.05, 1)) +
-  scale_x_discrete(guide = guide_axis(angle = 90, n.dodge = 2)) +
+ggplot(ifr) +
+  geom_point(aes(x = iso, y = 100*mn, color = method), position = position_dodge(width = .3), size = 2) +
+  geom_linerange(aes(x = iso, ymin = 100*low, ymax = 100*up, color = method), position = position_dodge(width = .3)) +
   labs(
     x = "Country",
-    y = "IFR estimate (%)"
+    y = "IFR estimate [%]",
+    color = "Method"
   ) +
   theme_bw() +
-  theme(legend.position = "none") +
-  facet_grid(cols = vars(continent), drop = T, scales = "free_x", space = "free_x")
+  theme(legend.position = "bottom")
 ```
 
 ![](man/figures/unnamed-chunk-6-1.png)<!-- -->
 
-``` r
+We can see that the differences in the estimated IFR come directly from
+the different age-specific IFR estimates by the two groups of authors:
 
-ggplot(ifr[ifr$continent %in% c("Americas", "Europe", "Oceania"),]) +
-  geom_point(aes(x = iso, y = 100*mn)) +
-  geom_linerange(aes(x = iso, ymin = 100*low, ymax = 100*up)) +
-  scale_y_log10(limits = c(0.05, 1)) +
-  scale_x_discrete(guide = guide_axis(angle = 90, n.dodge = 2)) +
+``` r
+est_levin <- get_est_levin() %>% mutate(method = "levin")
+est_odriscoll <- get_est_odriscoll(sex = "total") %>% mutate(method = "odriscoll")
+
+est <- bind_rows(
+    est_levin,
+    est_odriscoll
+  ) %>%
+  select(-sex, -quantile) %>%
+  tidyr::pivot_wider(names_from = stat, values_from = "p_dead_inf") %>%
+  mutate(
+    method = factor(method, levels = c("odriscoll", "levin")),
+    age_group = factor(age_group,
+      levels = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39",
+        "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79",
+        "80-84", "80+", "85+")),
+    )
+
+ggplot(est) +
+  geom_point(aes(age_group, 100*mean, col = method), size = 2) +
+  geom_linerange(aes(age_group, ymin = 100*low_95, ymax = 100*up_95, col = method)) +
   labs(
-    x = "Country",
-    y = "IFR estimate (%)"
+    x = "Age-group",
+    y = "IFR estimate [%] (log-scale)",
+    color = "Method"
   ) +
+  scale_y_log10() +
   theme_bw() +
-  theme(legend.position = "none") +
-  facet_grid(cols = vars(continent), drop = T, scales = "free_x", space = "free_x")
+  theme(legend.position = "bottom")
 ```
 
-![](man/figures/unnamed-chunk-6-2.png)<!-- -->
+![](man/figures/unnamed-chunk-7-1.png)<!-- -->
+
+Note that the ranges of the oldest age-groups are not matching exactly
+between the two estimates.

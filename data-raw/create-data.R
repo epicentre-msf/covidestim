@@ -196,6 +196,61 @@ odriscoll <- readr::read_csv("data-raw/severity/odriscoll_table_s4.tsv") %>%
 
 
 
+
+#' Compute estimates acording to Levin et al.
+#'
+#' @param stat Optional statistic to subset to (either "mean", "low_95", or
+#'   "up_95"). Defaults to `NULL`, in which case all cagegories are returned.
+#'
+#' @source
+#' Assessing the Age Specificity of Infection Fatality Rates for COVID-19:
+#' Systematic Review, Meta-Analysis, and Public Policy Implications
+#' Andrew T. Levin, William P. Hanage, Nana Owusu-Boaitey, Kensington B.
+#' Cochran, Seamus P. Walsh, Gideon Meyerowitz-Katz
+#' medRxiv 2020.07.23.20160895;
+#' doi: \url{https://doi.org/10.1101/2020.07.23.20160895}
+#'
+#' @export compute_est_Levin
+compute_est_Levin <- function(stat = NULL) {
+    #compute estimates for each age
+    ages <- seq(0, 89, by = 1)
+    ifr <- 10**(-3.27 + 0.0524*ages)/100
+    ifr_low <- 10**(-3.27-(1.96*0.07) + (0.0524 - 1.96*0.0013)*ages)/100
+    ifr_high <- 10**(-3.271+(1.96*0.07) + (0.0524 + 1.96*0.0013)*ages)/100
+    
+    #aggregate
+    lower_age <- seq(0, 80, by = 5)
+    upper_age <- seq(4, 84, by = 5)
+
+    age_group <- c(paste0(lower_age, "-", upper_age), "85+")
+    age_group <- rep(age_group, each = 5)
+    
+
+    out <- data.frame(
+        age_group = rep(age_group, 3),
+        p_dead_inf = c(ifr, ifr_low, ifr_high),
+        stat = c(
+            rep("mean", length(age_group)),
+            rep("low_95", length(age_group)),
+            rep("up_95", length(age_group))
+        ),
+        quantile = c(
+            rep(.5, length(age_group)),
+            rep(.025, length(age_group)),
+            rep(.975, length(age_group))
+        )
+    )
+
+    out <- aggregate(p_dead_inf ~ age_group + stat + quantile, out, mean) #aggregate by age group and stat
+
+    if (!is.null(stat)) out <- out[out$stat == stat,]
+
+    return(out)
+}
+
+levin <- compute_est_Levin()
+
+
 ## write
 usethis::use_data(wpp_pop,
                   shenzhen_samples,
@@ -206,6 +261,7 @@ usethis::use_data(wpp_pop,
                   bi,
                   imperial,
                   odriscoll,
+                  levin,
                   overwrite = TRUE)
 
 
