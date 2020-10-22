@@ -125,6 +125,25 @@ ggplot(ifr) +
 
 ![](man/figures/unnamed-chunk-6-1.png)<!-- -->
 
+Plotting the same figure on a log-scale we can see the differences in
+countries with younger populations too:
+
+``` r
+ggplot(ifr) +
+  geom_point(aes(x = iso, y = 100*mn, color = method), position = position_dodge(width = .3), size = 2) +
+  geom_linerange(aes(x = iso, ymin = 100*low, ymax = 100*up, color = method), position = position_dodge(width = .3)) +
+  labs(
+    x = "Country",
+    y = "IFR estimate [%] (log-scale)",
+    color = "Method"
+  ) +
+  theme_bw() +
+  theme(legend.position = "bottom") +
+  scale_y_log10()
+```
+
+![](man/figures/unnamed-chunk-7-1.png)<!-- -->
+
 We can see that the differences in the estimated IFR come directly from
 the different age-specific IFR estimates by the two groups of authors:
 
@@ -159,7 +178,7 @@ ggplot(est) +
   theme(legend.position = "bottom")
 ```
 
-![](man/figures/unnamed-chunk-7-1.png)<!-- -->
+![](man/figures/unnamed-chunk-8-1.png)<!-- -->
 
 Note that the ranges of the oldest age-groups are not matching exactly
 between the two estimates.
