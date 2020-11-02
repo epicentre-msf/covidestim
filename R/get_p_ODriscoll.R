@@ -25,13 +25,10 @@
 #' @author Flavio Finger <flavio.finger@@epicentre.msf.org>
 #'
 #' @source
-#' Age-specific mortality and immunity patterns
-#' of SARS-CoV-2 infection in 45 countries
-#' Megan O'Driscoll, Gabriel Ribeiro Dos Santos,
-#' Lin Wang, Derek A.T. Cummings, Andrew S Azman,
-#' Juliette Paireau, Arnaud Fontanet, Simon Cauchemez, Henrik Salje
-#' medRxiv 2020.08.24.20180851
-#' \url{https://doi.org/10.1101/2020.08.24.20180851}
+#' O’Driscoll, M., Dos Santos, G.R., Wang, L. et al.
+#' Age-specific mortality and immunity patterns of
+#' SARS-CoV-2. Nature (2020).
+#' \url{https://doi.org/10.1038/s41586-020-2918-0}
 #' 
 #' @examples
 #' # mean Pr(death|infection) for Canada (ISO3 code "CAN"), taking age

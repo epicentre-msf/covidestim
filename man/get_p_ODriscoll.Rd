@@ -5,13 +5,10 @@
 \title{Estimate Covid2019 outcome probabilities for a population given its age
 distribution, and age-severity estimates from O'Driscoll al. (2020)}
 \source{
-Age-specific mortality and immunity patterns
-of SARS-CoV-2 infection in 45 countries
-Megan O'Driscoll, Gabriel Ribeiro Dos Santos,
-Lin Wang, Derek A.T. Cummings, Andrew S Azman,
-Juliette Paireau, Arnaud Fontanet, Simon Cauchemez, Henrik Salje
-medRxiv 2020.08.24.20180851
-\url{https://doi.org/10.1101/2020.08.24.20180851}
+O’Driscoll, M., Dos Santos, G.R., Wang, L. et al.
+Age-specific mortality and immunity patterns of
+SARS-CoV-2. Nature (2020).
+\url{https://doi.org/10.1038/s41586-020-2918-0}
 }
 \usage{
 get_p_ODriscoll(x, p_type = c("p_dead_inf"), p_stat = c("mean",

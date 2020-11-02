@@ -166,7 +166,7 @@ imperial <- readr::read_csv("data-raw/severity/age_specific_params_Imperial.csv"
 
 ## Data from O'Driscoll et al. 2020, preprint
 # https://www.medrxiv.org/content/10.1101/2020.08.24.20180851v1
-odriscoll <- readr::read_csv("data-raw/severity/odriscoll_table_s4.tsv") %>%
+odriscoll <- readr::read_csv("data-raw/severity/odriscoll_table_s3.csv") %>%
   mutate(age_group = paste0(age_l, "-", age_u)) %>%
   mutate(age_group = if_else(age_group == "80-999", "80+", age_group)) %>%
   select(-age_u, -age_l) %>%
@@ -197,7 +197,7 @@ odriscoll <- readr::read_csv("data-raw/severity/odriscoll_table_s4.tsv") %>%
 
 ## Data from Brazeau et al. 2020, Imperial MRC Report 34
 # https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/covid-19/report-34-ifr/
-brazeau <- readr::read_csv("data-raw/severity/brazeau_table_2.tsv") %>%
+brazeau <- readr::read_csv("data-raw/severity/brazeau_table_2.csv") %>%
   mutate(age_group = paste0(age_l, "-", age_u)) %>%
   mutate(age_group = if_else(age_group == "90-999", "90+", age_group)) %>%
   select(-age_u, -age_l) %>%
