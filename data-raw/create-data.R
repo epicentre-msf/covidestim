@@ -195,6 +195,35 @@ odriscoll <- readr::read_csv("data-raw/severity/odriscoll_table_s4.tsv") %>%
   as.data.frame()
 
 
+## Data from Brazeau et al. 2020, Imperial MRC Report 34
+# https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/covid-19/report-34-ifr/
+brazeau <- readr::read_csv("data-raw/severity/brazeau_table_2.tsv") %>%
+  mutate(age_group = paste0(age_l, "-", age_u)) %>%
+  mutate(age_group = if_else(age_group == "90-999", "90+", age_group)) %>%
+  select(-age_u, -age_l) %>%
+  tidyr::pivot_longer(-age_group, values_to = "p_dead_inf") %>%
+  mutate(
+    stat = case_when(
+      grepl("_m", name) ~ "mean",
+      grepl("_u", name) ~ "up_95",
+      grepl("_l", name) ~ "low_95",
+      TRUE ~ NA_character_
+    ),
+    type = case_when(
+      grepl("^ifr_serorev_", name) ~ "p_dead_inf",
+      grepl("^ifr_", name) ~ "p_dead_inf_serorev",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  select(-name) %>%
+  mutate(quantile = case_when(
+    stat == "low_95" ~ .025,
+    stat == "up_95" ~ .975,
+    stat == "mean" ~ 0.5
+  )) %>%
+  mutate(p_dead_inf = p_dead_inf/100) %>% #percent!
+  as.data.frame()
+
 
 
 #' Compute estimates acording to Levin et al.
@@ -261,6 +290,7 @@ usethis::use_data(wpp_pop,
                   bi,
                   imperial,
                   odriscoll,
+                  brazeau,
                   levin,
                   overwrite = TRUE)
 

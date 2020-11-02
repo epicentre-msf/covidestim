@@ -91,6 +91,21 @@ get_est_odriscoll <- function(sex = NULL, stat = NULL) {
 }
 
 
+#' Get estimates from Brazeau
+#'
+#' @param type Optional type to subset to (either "p_dead_inf", "p_dead_inf_serorev").
+#'   Defaults to "p_dead_inf".
+#' @param stat Optional statistic to subset to (either "mean", "low_95", or
+#'   "up_95"). Defaults to `NULL`, in which case all cagegories are returned.
+#'
+#' @export get_est_brazeau
+get_est_brazeau <- function(type = "p_dead_inf", stat = NULL) {
+  dat <- fetch_data("brazeau")
+  if (!is.null(type)) dat <- dat[dat$type == type,]
+  if (!is.null(stat)) dat <- dat[dat$stat == stat,]
+  return(dat)
+}
+
 #' Get estimates from Levin
 #'
 #' @param stat Optional statistic to subset to (either "mean", "low_95", or

@@ -3,7 +3,7 @@
 \name{compare_IFR}
 \alias{compare_IFR}
 \title{Compile age-adjusted IFR estimates from different countries based on ensemble
-estimates by O'Driscoll et al. 2020 and Levin et al. 2020.}
+estimates by O'Driscoll et al. 2020, Levin et al. 2020 and Brazeau et al.}
 \usage{
 compare_IFR(countries = c("AFG", "PAK", "IRN"), p_sex = c("total",
   "male", "female"))
@@ -18,7 +18,8 @@ population estimates from the UN World Population Prospects 2019 dataset.}
 \value{
 A data.frame with IFR estimates (mean and 95% CI) for different countries
 and methods.
-Estimates by Levin et al. 2020 are only included if p_sex = "total".
+Estimates by Levin et al. 2020 and Brazeau et al. 2020
+ are only included if p_sex = "total".
 }
 \description{
 Compile age-adjusted IFR estimates from different countries based on ensemble

@@ -1,5 +1,5 @@
 #' Compile age-adjusted IFR estimates from different countries based on ensemble
-#' estimates by O'Driscoll et al. 2020 and Levin et al. 2020.
+#' estimates by O'Driscoll et al. 2020, Levin et al. 2020 and Brazeau et al.
 #'
 #' @description
 #' Compile age-adjusted IFR estimates from different countries based on ensemble
@@ -16,7 +16,8 @@
 #' @return
 #' A data.frame with IFR estimates (mean and 95% CI) for different countries
 #' and methods.
-#' Estimates by Levin et al. 2020 are only included if p_sex = "total".
+#' Estimates by Levin et al. 2020 and Brazeau et al. 2020
+#'  are only included if p_sex = "total".
 #'
 #' @author Flavio Finger <flavio.finger@@epicentre.msf.org>
 #'
@@ -50,6 +51,12 @@ compare_IFR <- function(countries = c("AFG", "PAK", "IRN"),
             low_levin <- get_p_Levin(x = cnt, p_stat = "low_95")
             new <- rbind(new, data.frame(iso = cnt, mn = mn_levin,
                 low = low_levin, up = up_levin, method = "levin"))
+
+            up_brazeau <- get_p_Brazeau(x = cnt, p_stat = "up_95")
+            mn_brazeau <- get_p_Brazeau(x = cnt, p_stat = "mean")
+            low_brazeau <- get_p_Brazeau(x = cnt, p_stat = "low_95")
+            new <- rbind(new, data.frame(iso = cnt, mn = mn_brazeau,
+                low = low_brazeau, up = up_brazeau, method = "brazeau"))
         }
 
         ifr_df <- rbind(
